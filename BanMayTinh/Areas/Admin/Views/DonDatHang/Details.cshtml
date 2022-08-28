@@ -1,72 +1,69 @@
-﻿@model BanMayTinh.Models.DB.LoaiSanPham
-
+﻿@model BanMayTinh.Models.DB.DonDatHang
+@using Newtonsoft.Json;
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi tiết đơn đặt hàng</h2>
 
 <div>
-    <h4>LoaiSanPham</h4>
+    <h4>Đơn hàng @Html.DisplayFor(model => model.Id)</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenLoaiSanPham)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenLoaiSanPham)
-        </dd>
+        <div class="attr-row">
+            <div class="attribute-name">Tên khách hàng</div>
+            <div class="attribute-value">@Html.DisplayFor(model => model.UserNameKH)</div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh1)
-        </dt>
+        <div class="attr-row">
+            <div class="attribute-name">Số điện thoại người nhận</div>
+            <div class="attribute-value">@Html.DisplayFor(model => model.SoDienThoaiNguoiNhan)</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh1)
-        </dd>
+        <div class="attr-row">
+            <div class="attribute-name">Ngày Đặt</div>
+            <div class="attribute-value">@Html.DisplayFor(model => model.NgayDat)</div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh2)
-        </dt>
+        <div class="attr-row">
+            <div class="attribute-name">Ngày Giao</div>
+            <div class="attribute-value">@Html.DisplayFor(model => model.NgayGiao)</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh2)
-        </dd>
+        <div class="attr-row">
+            <div class="attribute-name">Tên người nhận</div>
+            <div class="attribute-value">@Html.DisplayFor(model => model.TenNguoiNhan)</div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh3)
-        </dt>
+        @if (Model.YeuCau != null && Model.YeuCau != "")
+        {
+            <div class="attr-row">
+                <div class="attribute-name">Yêu cầu</div>
+                <div class="attribute-value">@Html.DisplayFor(model => model.YeuCau)</div>
+            </div>
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh4)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh4)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh5)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh5)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_DanhMuc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id_DanhMuc)
-        </dd>
-
+        <br>
+        <h1>Danh sách sản phẩm</h1>
+        @* <h2>SAN PHAM: @{ViewBag.ListSanPham}</h2> *@
+        @{var dsSanPham = ViewBag.ListSanPham;}
+        @foreach (var sp in dsSanPham) {
+            <div class="attr-row">
+                <div class="attribute-name">Sản phẩm</div>
+                <div class="attribute-value">@sp.TenSanPham</div>
+            </div>
+            <div class="attr-row">
+                <div class="attribute-value">Mã: @sp.Id</div>
+                <div class="attribute-value">
+                    <div class="grid_img">
+                        <div class="css3"><img style="max-height: 150px; max-width: 150px "
+                            src="~/Content/images/AnhSanPham/@sp.AnhSanPham" alt="" /></div>
+                    </div>
+                </div>
+            </div>
+        }
     </dl>
 </div>
 <p>

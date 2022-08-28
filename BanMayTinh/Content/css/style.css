@@ -3164,3 +3164,17 @@ p.cart a:hover {
 .list-wrapper {
 	background-color: rgb(255, 196, 196);
 }
+
+.attr-row {
+    display: flex;
+    margin-bottom: 7px;
+}
+
+.attr-row  .attribute-name {
+	width: 50%;
+	font-weight: bold;
+}
+
+.attr-row  .attribute-value {
+	width: 50%;
+}
