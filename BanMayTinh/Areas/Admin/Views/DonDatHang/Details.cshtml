@@ -5,10 +5,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Chi tiết đơn đặt hàng</h2>
-
 <div>
-    <h4>Đơn hàng @Html.DisplayFor(model => model.Id)</h4>
+    @* <h4>Đơn hàng @Html.DisplayFor(model => model.Id)</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -47,7 +45,6 @@
 
         <br>
         <h1>Danh sách sản phẩm</h1>
-        @* <h2>SAN PHAM: @{ViewBag.ListSanPham}</h2> *@
         @{var dsSanPham = ViewBag.ListSanPham;}
         @foreach (var sp in dsSanPham) {
             <div class="attr-row">
@@ -64,7 +61,124 @@
                 </div>
             </div>
         }
-    </dl>
+    </dl> *@
+
+    <div class="wrap">
+
+        <div class="tiêu-đề-giỏ-hàng">
+            <h4>CHI TIẾT ĐƠN ĐẶT HÀNG</h4>
+        </div>
+
+        <div class="tiếp-tục-mua-hàng" style="font-weight: bold;justify-content: normal;">
+            Trạng thái đơn hàng:
+
+            @if (Model.TrangThai == 1)
+            {
+                <div style="padding-left: 8px; font-weight:normal; color: coral">Chờ xác nhận</div>
+            }
+            else if (Model.TrangThai == 2)
+            {
+                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đang giao hàng</div>
+            }
+            else if (Model.TrangThai == 3)
+            {
+                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đã giao hàng</div>
+            }
+
+            else if (Model.TrangThai == 4)
+            {
+                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Giao thành công</div>
+            }
+
+            else if (Model.TrangThai == 5)
+            {
+                <div style="padding-left: 8px; font-weight:normal; color: red">Đơn hủy</div>
+            }
+        </div>
+
+
+
+        <div class="right-info-dh">
+            <div style="display:flex">
+                <div class="item-info" style="width: 98%;">
+                    <div class="label-info">Tên người nhận: </div>
+                    <div class="value-info">@Model.TenNguoiNhan</div>
+                </div>
+                <div class="item-info" style="width: 30%;">
+                    <div class="label-info">Số điện thoại: </div>
+                    <div class="value-info">@Model.SoDienThoaiNguoiNhan</div>
+                </div>
+            </div>
+
+            <div class="item-info">
+                <div class="label-info">Địa chỉ: </div>
+                <div class="value-info">@Model.DiaChi</div>
+            </div>
+        </div>
+        <div class="nội-dung-giỏ-hàng">
+
+            @{ double tongTien = 0;}
+            @{ double dongiasp = 0;}
+
+
+            @foreach (var ct in Model.ChiTietDonDatHangs)
+            {
+                <input type="hidden" value="@( tongTien += (double)ct.DonGia * (int)ct.SoLuong)" />
+                <input type="hidden" value="@{ dongiasp = ct.DonGia != null ? (double)ct.DonGia : 0;}" />
+                <div class="một-sản-phẩm">
+
+                    <div class="ảnh-sản-phẩm-giỏ-hàng">
+                        <a href="/man-hinh-viewsonic-vp2458">
+                            <img class="cart-product-img" src="~/Content/images/AnhSanPham/@ct.SanPham.AnhSanPham">
+                        </a>
+                    </div>
+
+                    <div class="new-cart-items-info" style="width:calc(100% - 200px);">
+                        <a href="/man-hinh-viewsonic-vp2458" class="new-cart-items-name">
+                            @ct.SanPham.TenSanPham
+
+                        </a>
+                        <div style="display:flex;">
+                            <div class="new-cart-items-desc" style="width:75%;">
+                                <p class="m-0"> <b>Mã sản phẩm: </b>@ct.SanPham.Id</p>
+                                <p class="m-0"> <b>Loại sản phẩm: </b>@ct.SanPham.LoaiSanPham.TenLoaiSanPham</p>
+                            </div>
+                            <div class="new-cart-items-desc" style="width:25%;">
+                                <p class="m-0"> <b>Số lượng: </b>@ct.SoLuong</p>
+                                <p class="m-0"> <b>Đơn giá: </b> @dongiasp.ToString("N0") VNĐ</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            }
+
+
+
+            <div class="right-info-dh" style="border:none; padding-bottom:0; padding-right:0;margin:0">
+                <div class="item-info div-end">
+                    <div class="label-info">Ngày đặt hàng:</div>
+                    <div class="value-info">@Model.NgayDat.ToString("dd/MM/yyyy")</div>
+                </div>
+                <div class="item-info div-end">
+                    <div class="label-info">Ngày giao hàng:</div>
+                    <div class="value-info">@Model.NgayGiao.ToString("dd/MM/yyyy")</div>
+                </div>
+                @if (!String.IsNullOrEmpty(@Model.YeuCau))
+                {
+                    <div class="item-info div-end">
+                        <div class="label-info">Ghi chú:</div>
+                        <div class="value-info">@Model.YeuCau</div>
+                    </div>
+                }
+                <div class="total-cart" style="padding-right: 0">
+                    Tổng tiền đơn hàng :
+                    <strong><span id="total_value" class="total-cart-price"> @tongTien.ToString("N0") VNĐ<u></u></span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
