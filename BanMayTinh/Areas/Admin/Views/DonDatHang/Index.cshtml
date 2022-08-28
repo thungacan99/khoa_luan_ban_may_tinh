@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BanMayTinh.Models.DB.DonDatHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="row" style="padding-bottom: 30px">
+            <div class="col-md-10">
+                <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách đơn hàng</strong>
+            </div>
+            <div class="col-md-1">
+                <a href="@Url.Action("Create", "DonDatHang")" class=" btn btn-success">Thêm Loại Sản Phẩm</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" style="padding-right: 20px">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr style="background: #faf51a">
+                    <th style="width: 50px" class="text-center">ID</th>
+                    <th>Tên khách hàng</th>
+                    <th style="width: 180px">Số điện thoại</th>
+                    <th style="width: 180px">Ngày đặt</th>
+                    <th style="width: 180px">Ngày giao</th>
+                    <th style="width: 150px">Tên người nhận</th>
+                    <th style="width: 150px">Địa chỉ</th>
+                    <th style="padding-right: 10px">Yêu cầu</th>
+                    @* <th style="padding-right: 10px">Trạng thái</th> *@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @item.Id
+                        </td>
+                        <td>@item.UserNameKH</td>
+                        <td>@item.SoDienThoaiNguoiNhan</td>
+                        <td>@item.NgayDat</td>
+                        <td>@item.NgayGiao</td>
+                        <td>@item.TenNguoiNhan</td>
+                        <td>@item.YeuCau</td>
+                        @* <td>@item.TrangThai</td> *@
+                        <td>
+                            <a href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Xem</a>
+                            <a class="text-warning" href="@Url.Action("Edit", "DonDatHang", new {@id = item.Id})">Sửa</a>
+                            <a class="text-danger" href="@Url.Action("Delete", "DonDatHang", new {@id = item.Id})">Xóa</a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
