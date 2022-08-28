@@ -405,6 +405,7 @@
     <Content Include="Views\Cart\DatHangThanhCong.cshtml" />
     <Content Include="Views\Cart\XacNhanDatHang.cshtml" />
     <Content Include="Views\DonHang\DSDonHang.cshtml" />
+    <Content Include="Views\DonHang\CTDonHang.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

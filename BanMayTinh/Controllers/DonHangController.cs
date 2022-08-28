@@ -58,5 +58,22 @@ namespace BanMayTinh.Controllers
             }
             return RedirectToAction("LogIn", "Home");
         }
+
+        /// <summary>
+        /// chuyển đến màn hình chi tiết đơn hàng
+        /// </summary>
+        /// <param name="idDonHang"></param>
+        /// <returns></returns>
+        public ActionResult CTDonHang(int idDonHang)
+        {
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null)
+            {
+                DonDatHang ctDonDatHang = dbContext.DonDatHangs.Where(x => x.Id == idDonHang).FirstOrDefault();
+
+                return View(ctDonDatHang);
+            }
+            return RedirectToAction("LogIn", "Home");
+        }
     }
 }
