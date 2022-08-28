@@ -8,9 +8,33 @@
 }
 
 
+<script>
+    function showChangeInfo() {
+        let popupInfo = document.querySelector(".info-dh-enter");
+        if (popupInfo) {
+            popupInfo.classList.remove("hide-item");
+        }
+        let popupInfoView = document.querySelector(".info-dh-view");
+        if (popupInfoView) {
+            popupInfoView.classList.add("hide-item");
+        }
+    }
 
+    function cancelInfo() {
+        let popupInfo = document.querySelector(".info-dh-enter");
+        if (popupInfo) {
+            popupInfo.classList.add("hide-item");
+        }
+        let popupInfoView = document.querySelector(".info-dh-view");
+        if (popupInfoView) {
+            popupInfoView.classList.remove("hide-item");
+        }
+    }
+</script>
 <style>
-
+    .hide-item {
+        display: none;
+    }
     /*    .container-don-hang {
         display: flex;
     }*/
@@ -59,35 +83,106 @@
         </div>
 
         <div class="tiếp-tục-mua-hàng" style="font-weight: bold;justify-content: normal;">
-            Trạng thái đơn hàng:
+            <div style="width: 100%; display: inline-flex;">
+                Trạng thái đơn hàng:
+                @if (Model.TrangThai == 1)
+                {
+                    <div style="padding-left: 8px; font-weight: normal; color: #FFAF02;">Chờ xác nhận</div>
+                }
+                else if (Model.TrangThai == 2)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đang giao hàng</div>
+                }
+                else if (Model.TrangThai == 3)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đã giao hàng</div>
+                }
+
+                else if (Model.TrangThai == 4)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Giao thành công</div>
+                }
+
+                else if (Model.TrangThai == 5)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: red">Giao thất bại</div>
+                }
+                else if (Model.TrangThai == 6)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: red">Đơn hủy</div>
+                }
+            </div>
 
             @if (Model.TrangThai == 1)
             {
-                <div style="padding-left: 8px; font-weight:normal; color: coral">Chờ xác nhận</div>
-            }
-            else if (Model.TrangThai == 2)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đang giao hàng</div>
-            }
-            else if (Model.TrangThai == 3)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đã giao hàng</div>
-            }
-
-            else if (Model.TrangThai == 4)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Giao thành công</div>
-            }
-
-            else if (Model.TrangThai == 5)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: red">Đơn hủy</div>
+                <div class="" style="width: 210px; color: #FFAF02;cursor:pointer;" onclick="showChangeInfo()">
+                    Đổi thông tin giao hàng
+                </div>
             }
         </div>
 
 
+        <div class="right-info-dh info-dh-enter hide-item">
+            <form action="@Url.Action("ChinhSuaTTDonHang", "Cart")" method="post">
+                @{ TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];}
+                <div class="">
 
-        <div class="right-info-dh">
+                    <input type="hidden" name="NgayDat" id="buyer_name" value="@System.DateTime.Now">
+                    <input type="hidden" name="UserNameKH" id="buyer_name" value="@dangnhap.UserName">
+                    <input type="hidden" name="Id" id="buyer_mobile" value="@Model.Id">
+                    <input type="hidden" name="TrangThai" id="buyer_mobile" value="@Model.TrangThai">
+
+                    <div class="new-cart-bottom">
+                        <div class="c3_col_1">
+                            <div class="c3_box user_info">
+                                <div class="user_info-item">
+                                    <span class="txt2">Họ tên*</span>
+                                    <input type="text" name="TenNguoiNhan" id="buyer_name" value="@Model.TenNguoiNhan">
+                                </div>
+
+                                <div class="user_info-item">
+                                    <span class="txt2">Số điện thoại*</span>
+                                    <input type="text" name="SoDienThoaiNguoiNhan" id="buyer_mobile" value="@Model.SoDienThoaiNguoiNhan">
+
+                                </div>
+
+                                <div class="user_info-item">
+                                    <span class="txt2">Ngày giao</span>
+                                    <input type="date" name="NgayGiao" id="buyer_email" value="@Model.NgayGiao">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="c3_col_1">
+                            <div class="c3_box user_info">
+                                <div class="user_info-item">
+                                    <span class="txt2">Địa chỉ*</span>
+                                    <input type="text" name="DiaChi" id="buyer_address" value="@Model.DiaChi">
+                                </div>
+                                <div class="user_info-item">
+                                    <span class="">Ghi chú</span>
+                                    <input type="text" name="YeuCau" id="buyer_note" value="@Model.YeuCau">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hoàn-tất-đơn-hàng" style="display:flex;">
+                    <div class="tiếp-tục-thanh-toán">
+                        <div onclick="cancelInfo()" class="btn-xac-nhan-dat-hang" style="cursor:pointer; background-color: black; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 10px; width:100px; margin-left:500px;">Quay lại</div>
+                    </div>
+                    <div class="tiếp-tục-thanh-toán">
+                        <button class="btn-xac-nhan-dat-hang" style="cursor: pointer; background-color: black; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 6px; width: 80px; margin-left: 50px; ">Lưu</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="right-info-dh info-dh-view">
             <div style="display:flex">
                 <div class="item-info" style="width: 98%;">
                     <div class="label-info">Tên người nhận: </div>
@@ -103,18 +198,6 @@
                 <div class="label-info">Địa chỉ: </div>
                 <div class="value-info">@Model.DiaChi</div>
             </div>
-            @*<div class="item-info">
-                    <div class="label-info">Ngày giao hàng: </div>
-                    <div class="value-info">Mạnhk</div>
-                </div>
-                <div class="item-info">
-                    <div class="label-info">Địa chỉ: </div>
-                    <div class="value-info">Mạnhk</div>
-                </div>
-                <div class="item-info">
-                    <div class="label-info">Ghi chú: </div>
-                    <div class="value-info">Mạnhk</div>
-                </div>*@
         </div>
         <div class="nội-dung-giỏ-hàng">
 
@@ -141,6 +224,7 @@
                         </a>
                         <div style="display:flex;">
                             <div class="new-cart-items-desc" style="width:75%;">
+                                <p class="m-0"> <b>Mã sản phẩm: </b>@ct.SanPham.Id</p>
                                 <p class="m-0"> <b>Mã sản phẩm: </b>@ct.SanPham.Id</p>
                                 <p class="m-0"> <b>Loại sản phẩm: </b>@ct.SanPham.LoaiSanPham.TenLoaiSanPham</p>
                             </div>

@@ -272,5 +272,15 @@ namespace BanMayTinh.Controllers
 
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult ChinhSuaTTDonHang([Bind(Include = "Id, UserNameKH, " +
+            "SoDienThoaiNguoiNhan, NgayDat, NgayGiao, TenNguoiNhan, DiaChi, YeuCau, TrangThai")] DonDatHang donDH)
+        {
+            dbContext.Entry(donDH).State = EntityState.Modified;
+            dbContext.SaveChanges();
+            return RedirectToAction("CTDonHang", "DonHang", new { @idDonHang = donDH.Id });
+        }
     }
 }

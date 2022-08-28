@@ -40,6 +40,10 @@ namespace BanMayTinh.Controllers
             }
             else if (trangthai == 5)
             {
+                formName = "Đơn hàng giao thất bại";
+            }
+            else if (trangthai == 6)
+            {
                 formName = "Đơn hàng hủy";
             }
             donDatHang.FormName = formName;
