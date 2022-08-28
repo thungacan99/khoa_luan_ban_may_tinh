@@ -1,0 +1,197 @@
+﻿@using System
+@using BanMayTinh.Models.DB
+@model BanMayTinh.Models.DB.GioHang
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login">
+    <div class="wrap">
+
+        <div class="tiêu-đề-giỏ-hàng">
+            <h4>ĐẶT HÀNG THÀNH CÔNG</h4>
+        </div>
+
+        <div class="tiếp-tục-mua-hàng">
+
+            <div class="nút-tiếp-tục">
+                <a href="@Url.Action("ChiTietDatHang", "Cart")" class="tiep-tuc-mua-hang-cart">Xem Lại Thông Tin Đặt Hàng</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <form action="@Url.Action("XacNhanDatHang")" method="post">
+            @{ TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];}
+            <div class="nội-dung-giỏ-hàng">
+
+                <input type="hidden" name="NgayDat" id="buyer_name" value="@System.DateTime.Now">
+                <input type="hidden" name="UserNameKH" id="buyer_name" value="@dangnhap.UserName">
+
+                <div class="new-cart-bottom">
+                    <div class="c3_col_1">
+                        <div class="c3_box user_info">
+                            <div class="title_box_cart"> Thông tin Người Nhận Hàng</div>
+                            <div class="user_info-item">
+                                <span class="txt2">Họ tên*</span>
+                                <input type="text" name="TenNguoiNhan" id="buyer_name" value="">
+                            </div>
+
+                            <div class="user_info-item">
+                                <span class="txt2">Số điện thoại*</span>
+                                <input type="text" name="SoDienThoaiNguoiNhan" id="buyer_mobile" value="">
+
+                            </div>
+
+                            <div class="user_info-item">
+                                <span class="txt2">Ngày giao</span>
+                                <input type="text" name="NgayGiao" id="buyer_email" value="">
+                            </div>
+
+                            <div class="user_info-item">
+                                <span class="txt2">Địa chỉ*</span>
+                                <textarea id="buyer_address" name="DiaChi"></textarea>
+                            </div>
+                            <div class="user_info-item">
+                                <span class="">Ghi chú</span>
+                                <textarea name="YeuCau" id="buyer_note" style="height:70px"></textarea>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="c3_col_1">
+                        <div class="c3_box">
+                            <div class="title_box_cart">Hình thức thanh toán</div>
+                            <table class="tbl_pay" style="font-size: 15px;">
+
+
+                                <tbody>
+                                    <tr>
+                                        <td valign="top"><input type="radio" id="pay_method_2" name="pay_method" value="2" class="pay_option" checked=""></td>
+                                        <td valign="top">
+                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_2">Thanh toán tiền mặt khi nhận hàng (tiền mặt / quẹt thẻ ATM, Visa, Master)</label></div>
+
+
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td valign="top"><input type="radio" id="pay_method_8" name="pay_method" value="8" class="pay_option"></td>
+                                        <td valign="top">
+                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_8">Thanh toán qua chuyển khoản qua tài khoản ngân hàng (khuyên dùng)</label></div>
+
+
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td valign="top"><input type="radio" id="pay_method_4" name="pay_method" value="4" class="pay_option"></td>
+                                        <td valign="top">
+                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_4">Thanh toán qua Ngân Lượng (ATM nội địa, Visa, Master)</label></div>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td valign="top"><input type="radio" id="pay_method_10" name="pay_method" value="10" class="pay_option"></td>
+                                        <td valign="top">
+                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_10">Trả góp qua Alepay (Ngân Lượng)</label></div>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td valign="top"><input type="radio" id="pay_method_11" name="pay_method" value="11" class="pay_option"></td>
+                                        <td valign="top">
+                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_11">Thanh toán trực tuyến (Bằng thẻ ATM/Visa/Master qua cổng VnPay)</label></div>
+
+
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="c3_box">
+                            <div class="tbl_cart3">
+                                <table style="width: 100%; height: 99px;background: #eef1f2;padding: 10px 5px; font-size: 20px;">
+                                    <tbody>
+
+
+                                        <tr class="txt_16">
+                                            <td class="txt2" style="padding: 30px 20px 20px;">
+                                                <b>Thành tiền</b>
+                                            </td>
+                                            <td class="txt2 text-right">
+                                                <strong class="red total-cart-payment"> @ViewData["TongTien"] <u>đ</u></strong><br>
+                                                <span class="txt_12" style="font-size: 16px; margin-left:-18px;">(Giá chưa bao gồm VAT)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="clear space2"></div>
+
+                                @*<div style="" class="new-cart-button">
+
+                                        <input type="submit" class="button button-100 bg-red" value="Đặt hàng">
+
+                                    </div>*@
+
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="c3_col_1">
+                        @*<div class="c3_box">
+                                <div class="tbl_cart3">
+                                    <table style="width: 100%;background: #f6f6f6;padding: 10px 5px;">
+                                        <tbody>
+
+
+                                            <tr class="txt_16">
+                                                <td class="txt2">
+                                                    <b>Thành tiền</b>
+                                                </td>
+                                                <td class="txt2 text-right">
+                                                    <strong class="red total-cart-payment">28.678.000 <u>đ</u></strong><br>
+                                                    <span class="txt_12">(Giá chưa bao gồm VAT)</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="clear space2"></div>
+                                    <div style="" class="new-cart-button">
+
+                                        <input type="submit" class="button button-100 bg-red" value="Đặt hàng">
+
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="hoàn-tất-đơn-hàng">
+                <div class="tiếp-tục-thanh-toán">
+                    <a href="@Url.Action("Index", "XacNhanDatHang")" class="hoàn-tất">TIẾN HÀNH ĐẶT HÀNG</a>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="clearfix">
+
+        </div>
+    </div>
+</div>
+
+
+

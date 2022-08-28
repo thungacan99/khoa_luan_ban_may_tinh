@@ -1,0 +1,120 @@
+﻿@using BanMayTinh.Models.DB
+@model BanMayTinh.Models.DB.GioHang
+
+
+
+
+<div class="login">
+    <div class="wrap">
+
+
+        <div class="tiêu-đề-giỏ-hàng">
+            <h4>THÔNG TIN GIỎ HÀNG </h4>
+        </div>
+
+        <div class="tiếp-tục-mua-hàng">
+
+            <div class="nút-tiếp-tục">
+                <a href="@Url.Action("Index", "Home")" class="tiep-tuc-mua-hang-cart">Tiếp tục mua hàng</a>
+            </div>
+
+            <div class="nút-xóa">
+                <a href="@Url.Action("XoaGioHang")" class="xóa-giỏ-hàng-cart">Xóa giỏ hàng</a>
+            </div>
+
+            <div class="clearfix">
+
+            </div>
+        </div>
+
+        <div class="nội-dung-giỏ-hàng">
+
+            @{ double tongTien = 0;}
+
+            @foreach (ChiTietGioHang ct in Model.ChiTietGioHangs)
+            {
+                <input type="hidden" value="@( tongTien += (double)ct.DonGia * (int)ct.SoLuong)" />
+
+                <div class="một-sản-phẩm">
+
+                    <div class="ảnh-sản-phẩm-giỏ-hàng">
+                        <a href="/man-hinh-viewsonic-vp2458">
+                            <img class="cart-product-img" src="~/Content/images/AnhSanPham/@ct.SanPham.AnhSanPham">
+                        </a>
+                    </div>
+
+                    <div class="new-cart-items-info">
+                        <a href="/man-hinh-viewsonic-vp2458" class="new-cart-items-name">
+                            @ct.SanPham.TenSanPham
+
+                        </a>
+                        <div class="new-cart-items-desc">
+                            <p class="m-0"> <b>Mã sản phẩm: </b>@ct.SanPham.Id</p>
+                            <p class="m-0"> <b>Loại sản phẩm: </b>@ct.SanPham.LoaiSanPham.TenLoaiSanPham</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="new-cart-items-checkout d-flex">
+
+                        <span class="new-cart-items-price js-show-buy-price"><span>@ct.SanPham.DonGia</span> <u>đ</u> </span>
+
+
+
+                        <span class="new-cart-quantity">
+
+                            <form action="@Url.Action("CapNhapSoLuong")" method="post">
+                                <input type="hidden" name="maSP" value="@ct.SanPham.Id" />
+
+                                <input class="buy-quantity quantity-change" name="soLuong" value="@ct.SoLuong" size="5">
+                                <button type="submit" style="color: #d00;font-weight: bold;border: 1px #ccc solid; border-radius: 1px;
+                                         padding: 7px;background-color: white;margin-left: 15px;" class="cập-nhật-số-lượng">
+                                    Cập nhật
+                                </button>
+
+                            </form>
+
+                        </span>
+
+
+                        @*<b style="display:none;" class="total-item-price"> 144.689.000 </b>*@
+
+                        @*<div class="new-cart-items-del">
+                                <a href="javascript:void(0)" class="delete-from-cart red">Cập nhật</a>
+                            </div>*@
+
+                        <div class="new-cart-items-del">
+                            <a href="@Url.Action("XoaSP", new { maSP = System.Convert.ToInt64(ct.Id_SanPham) })" class="delete-from-cart red" style="margin-left:5px;">Xóa</a>
+                        </div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            }
+
+
+
+
+
+            <div class="total-cart">
+                Tổng tiền đơn hàng :
+                <strong><span id="total_value" class="total-cart-price"> @tongTien.ToString("N0") <u>đ</u></span></strong>
+            </div>
+
+        </div>
+
+        <div class="hoàn-tất-đơn-hàng">
+
+            <div class="tiếp-tục-thanh-toán">
+                <a href="@Url.Action("ChiTietDatHang")" class="hoàn-tất">TIẾN HÀNH ĐẶT HÀNG</a>
+            </div>
+
+        </div>
+
+        <div class="clearfix">
+
+        </div>
+    </div>
+</div>

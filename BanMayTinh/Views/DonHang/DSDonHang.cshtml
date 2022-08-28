@@ -1,0 +1,140 @@
+﻿@using BanMayTinh.Models.DB
+
+@model BanMayTinh.Models.DB.DSDonDatHang
+
+@{
+    ViewBag.Title = "DSDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .container-menu {
+        width: 100%;
+        display: flex;
+    }
+
+        .container-menu .menu-div {
+            width: 20%;
+            background: #08080b;
+        }
+
+            .container-menu .menu-div .menu-item a {
+                cursor: pointer;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                color: #fff;
+                padding: 0px 16px;
+            }
+
+            .container-menu .menu-div .menu-item:hover {
+                background: #555e58;
+            }
+
+        .container-menu .content-div {
+            width: 80%;
+            padding-left: 18px;
+        }
+
+            .container-menu .content-div table {
+                width: -webkit-fill-available;
+            }
+
+                .container-menu .content-div table thead {
+                    height: 34px;
+                    line-height: 34px;
+                }
+
+                    .container-menu .content-div table thead tr th {
+                        background: #e5e8ec;
+                        border: 1px solid #c7c7c7;
+                    }
+
+                .container-menu .content-div table tbody :hover {
+                    background: #e5f3ff;
+                    cursor: pointer;
+                }
+
+                .container-menu .content-div table tbody tr td {
+                    height: 34px;
+                    border: 1px solid #c7c7c7;
+                    padding: 12px;
+                }
+</style>
+
+
+<script>
+
+</script>
+
+
+
+<div class="login">
+    <div class="wrap">
+        <div class="container-menu">
+            <div class="menu-div">
+                <div class="menu-item">
+                    <a href="@Url.Action("DSDonHang", new { trangthai = 0 })">
+                        Tất cả
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="@Url.Action("DSDonHang", new { trangthai = 1 })">
+                        Chờ xác nhận
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="@Url.Action("DSDonHang", new { trangthai = 2 })">
+                        Đang giao hàng
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="@Url.Action("DSDonHang", new { trangthai = 3 })">
+                        Đã giao hàng
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="@Url.Action("DSDonHang", new { trangthai = 4 })">
+                        Giao thành công
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="@Url.Action("DSDonHang", new { trangthai = 5 })">
+                        Đơn hủy
+                    </a>
+                </div>
+            </div>
+            <div class="content-div">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-st">
+                        <tr style="background: #faf51a">
+                            <th style="width: 70px" class="text-center">Ngày đặt</th>
+                            <th style="width: 70px">Ngày giao</th>
+                            <th style="width: 180px">Tên người nhận</th>
+                            <th style="width: 280px">Địa chỉ</th>
+                            <th>Yêu cầu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListDonDatHang)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @item.NgayDat.ToString("dd/MM/yyyy")
+                                </td>
+                                <td>@item.NgayGiao.ToString("dd/MM/yyyy")</td>
+                                <td>@item.TenNguoiNhan</td>
+                                <td>@item.DiaChi</td>
+                                <td>@item.YeuCau</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+    

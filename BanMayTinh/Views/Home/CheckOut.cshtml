@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login">
+    <div class="wrap">
+        <h4 class="title">Bạn đã hoàn thành đặt hàng</h4>
+        <div class="tiếp-tục-mua-hàng">
+            <div class="nút-tiếp-tục">
+                <a href="@Url.Action("Index", "Home")" class="hoàn-tất">VỀ TRANG CHỦ</a>
+            </div>
+            <div class="nút-xóa">
+                <a href="@Url.Action("DSDonHang", "DonHang")" class="hoàn-tất">XEM ĐƠN ĐẶT HÀNG</a>
+            </div>
+        </div>
+    </div>
+</div>
+

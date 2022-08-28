@@ -1,0 +1,237 @@
+﻿@model BanMayTinh.Models.DB.SanPham
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <style>
+        .hide-item {
+            display: none;
+        }
+
+        .label-item {
+            width: 80%;
+            display: inline-flex;
+        }
+
+        .ic-add {
+            margin-left: 10px;
+            cursor: pointer;
+            background: url("../../../../Content/icons.svg");
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            background-position: -32px -294px;
+        }
+
+        .ic-sub {
+            margin-left: 10px;
+            cursor: pointer;
+            background: url("../../../../Content/icons.svg");
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            background-position: -127px -390px;
+        }
+
+        .item-input {
+            width: calc(100% - 100px);
+            padding: 12px;
+        }
+
+        .item-props {
+            display: flex;
+        }
+    </style>
+
+    <script>
+        var isShowItem1 = true;
+        var propsName1 = "Thuộc tính x";
+
+        function alertTest() {
+            alert(isShowItem1);
+        }
+
+        function showItemNext(idCurr) {
+            let idNext = idCurr + 1;
+            let itemNext = document.getElementById('props' + idNext);
+            let icSubCurrent = document.querySelector('.ic-add-' + idCurr);
+
+            if (itemNext) {
+                itemNext.classList.remove("hide-item");
+            }
+
+            //if (icSubCurrent) {
+            //    icSubCurrent.classList.add('hide-item');
+            //}
+        }
+
+        function hideItemProps(idCurr) {
+            let itemNext = document.getElementById('props' + idCurr);
+            if (itemNext) {
+                itemNext.classList.add('hide-item');
+            }
+        }
+    </script>
+
+    <div class="cart">
+        <div class="cart-header">
+            <div class="row">
+                <div class="clo-md-6">
+                    <h4 style="font-size:xx-large">Thêm Sản Phẩm </h4>
+                </div>
+                <div class="clo-md-6 text-right" style="padding-right: 150px">
+                    <a href="@Url.Action("Index", "SanPham")">Quay lại</a>
+                    <button class="btn-success" type="submit">Lưu</button>
+                </div>
+            </div>
+        </div>
+        <div class="cart-body" style="padding-top: 30px; padding-right: 20px">
+            <div class="form-group">
+                <label class="label-item">
+                    Chọn Hãng Sản Xuất
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.DropDownList("Id_HangSanXuat", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_HangSanXuat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label-item">
+                    Chọn Loại Sản Phẩm
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.DropDownList("Id_LoaiSanPham", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Id_LoaiSanPham, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label-item">
+                    Tên Sản Phẩm
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.TenSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label-item">
+                    Đơn Giá
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.DonGia, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label-item">
+                    Số Lượng
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="props1">
+                <label class="label-item">
+                    Thuộc tính 1
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.ThuocTinh1, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ThuocTinh1, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="ic-add ic-add-1" onclick="showItemNext(1)"></div>
+                </div>
+            </div>
+            <div class="form-group hide-item" id="props2">
+                <label class="label-item">
+                    Thuộc tính 2
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.ThuocTinh2, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ThuocTinh2, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="ic-add ic-add-2" onclick="showItemNext(2)"></div>
+                    <div class="ic-sub ic-sub-2" onclick="hideItemProps(2)"></div>
+                </div>
+            </div>
+            <div class="form-group hide-item" id="props3">
+                <label class="label-item">Thuộc tính 3</label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.ThuocTinh3, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ThuocTinh3, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="ic-add ic-add-3" onclick="showItemNext(3)"></div>
+                    <div class="ic-sub ic-sub-3" onclick="hideItemProps(3)"></div>
+                </div>
+            </div>
+            <div class="form-group hide-item" id="props4">
+                <label class="label-item">Thuộc tính 4</label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.ThuocTinh4, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ThuocTinh4, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="ic-add ic-add-4" onclick="showItemNext(4)"></div>
+                    <div class="ic-sub ic-sub-4" onclick="hideItemProps(4)"></div>
+                </div>
+            </div>
+            <div class="form-group hide-item" id="props5">
+                <label class="label-item">Thuộc tính 5</label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.ThuocTinh5, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ThuocTinh5, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="ic-sub ic-sub-5" onclick="hideItemProps(5)"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label-item">
+                    Hình Ảnh
+                </label>
+                <div class="item-props">
+                    <div class="item-input">
+                        @Html.EditorFor(model => model.AnhSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AnhSanPham, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <p></p>
+
+            <div class="form-group">
+                <label class="label-item">
+                    Hình Ảnh
+                </label>
+                <form method="post" enctype="multipart/form-data"></form>
+                <div class="form-group">
+                    <input type="file" id="UL_anh" name="UL_anh" accept="image/*" />
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+}
+
+

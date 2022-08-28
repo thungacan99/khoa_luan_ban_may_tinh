@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model PagedList.IPagedList<BanMayTinh.Models.DB.SanPham>
+@using PagedList.Mvc;
+
+<style>
+    .pagination .active {
+        border: solid #808080;
+        border-width: 1px;
+    }
+</style>
+
+<div class="login">
+    <div class="wrap">
+        <div class="rsidebar span_1_of_left">
+            <section class="sky-form">
+                <h4>MÁY TÍNH</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Máy tính văn phòng</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Máy tính chơi game</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Máy chủ</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Tất cả</label>
+                    </div>
+                </div>
+                <h4>CPU</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>CPU Intel (70)</label>
+                    </div>
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>CPU AMD (50)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Khác (18)</label>
+                    </div>
+                </div>
+                <h4>RAM</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>4GB (20)</label>
+                    </div>
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>8GB (5)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>16GB (7)</label>
+                        
+                    </div>
+                </div>
+            </section>
+            <section class="sky-form">
+                <h4>NGUỒN</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>650W (30)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>750W (10)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Khác (1)</label>
+                    </div>
+                </div>
+            </section>
+            <section class="sky-form">
+                <h4>MÀN HÌNH</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>14 Inch (30)</label>
+                    </div>
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>15.6 Inch (30)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i> 17.3 Inch (30)</label>
+                    </div>
+                </div>
+            </section>
+            <section class="sky-form">
+                <h4>SẢN PHẨM KHÁC</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Ổ cứng HDD (30)</label>
+                    </div>
+                    <div class="col col-4">
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Ổ cứng SSD (30)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i> Mainboard (30)</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i> VGA (30)</label>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="cont span_2_of_3">
+            <div class="mens-toolbar">
+                <div class="sort">
+                    <div class="sort-by">
+                        @using (Html.BeginForm("Shop", "Product", FormMethod.Get))
+                        {
+                            string typeSort = ViewBag.CurrentSort;
+                            List<SelectListItem> listItems = new List<SelectListItem>();
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Sản phẩm mới",
+                                Value = "noSort",
+                                Selected = typeSort == "noSort",
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Từ thấp đến cao",
+                                Value = "asc",
+                                Selected = typeSort == "asc",
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Từ cao đến thấp",
+                                Value = "desc",
+                                Selected = typeSort == "desc",
+                            });
+                            <label>Sắp xếp theo</label>
+                            @Html.DropDownList("typeSort", listItems, new { @onchange = "this.form.submit();" })
+                        }
+                    </div>
+                </div>
+                <div class="pager">
+
+                    <ul class="dc_pagination dc_paginationA dc_paginationA06">
+                        <li><a href="#" class="previous">Trang</a></li>
+                        <li class="current">
+                            @Html.PagedListPager(Model, page => Url.Action("Shop",
+                                   new { page, typeSort = ViewBag.CurrentSort })
+                            )
+                           
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="box1">
+                @foreach (BanMayTinh.Models.DB.SanPham item in Model)
+                {
+                    <div class="col_1_of_single1 span_1_of_single1" style="margin-left: 0px;margin-right: 42px;">
+                        <div class="view1 view-fifth1">
+                            <div class="top_box">
+
+                                <h3 class="m_1" style="height: 50px;">@item.TenSanPham</h3>
+
+                                <div class="grid_img">
+                                    <div class="css3"><img src="~/Content/images/AnhSanPham/@item.AnhSanPham" width="150" , height="150" alt="" /></div>
+                                    <div class="mask1">
+                                        <a href="@Url.Action("Detail", "Product", new { id = item.Id })" class=" info">Xem chi tiết</a>
+                                    </div>
+                                </div>
+                                <div class="price">@item.DonGia</div>
+
+                            </div>
+
+                        </div>
+                        <span class="rating1" style="width:42%">
+                            <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                            <label for="rating-input-1-5" class="rating-star1"></label>
+                            <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                            <label for="rating-input-1-4" class="rating-star1"></label>
+                            <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                            <label for="rating-input-1-3" class="rating-star1"></label>
+                            <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                            <label for="rating-input-1-2" class="rating-star"></label>
+                            <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                            <label for="rating-input-1-1" class="rating-star"></label>&nbsp;
+                        </span>
+                        <ul class="list2" style="width:56%">
+                            <li>
+                                <img src="~/Content/images/plus.png" alt="" />
+                                <ul class="icon1 sub-icon1 profile_img">
+                                    <li>
+                                        <a class="active-icon c1" href="#" style="margin-top: 9px;">Thêm vào giỏ </a>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                }
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+

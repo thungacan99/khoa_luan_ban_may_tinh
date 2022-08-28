@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BanMayTinh.Models.DB.SanPham
+
+<div class="single">
+    <div class="wrap">
+        <div class="rsidebar span_1_of_left">
+            <section class="sky-form">
+                <h4>DANH MỤC MÁY TÍNH</h4>
+                <div class="row" style="padding: 20px; padding-left: 5px;">
+                    <div class="col col-4">
+                        <label class="checkbox">
+                            <a href="@Url.Action("List", "Product", new { danhmucId = 1})" style="color: #555;">
+                                Tất cả
+                            </a>
+                        </label>
+                        @foreach (BanMayTinh.Models.DB.LoaiSanPham item in ViewBag.ListLoaiSanPhamMayTinh)
+                        {
+                            <label class="checkbox">
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 1, loaisanphamId = item.Id})" style="color: #555;">
+                                    @item.TenLoaiSanPham
+                                </a>
+                            </label>
+                        }
+                    </div>
+                </div>
+            </section>
+            <section class="sky-form">
+                <h4>DANH MỤC LINH KIỆN</h4>
+                <div class="row" style="padding: 20px; padding-left: 5px;">
+                    <div class="col col-4">
+                        <label class="checkbox">
+                            <a href="@Url.Action("List", "Product", new { danhmucId = 2})" style="color: #555;">
+                                Tất cả
+                            </a>
+                        </label>
+                        @foreach (BanMayTinh.Models.DB.LoaiSanPham item in ViewBag.ListLoaiSanPhamLinhKien)
+                        {
+                            <label class="checkbox">
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 2, loaisanphamId = item.Id})" style="color: #555;">
+                                    @item.TenLoaiSanPham
+                                </a>
+                            </label>
+                        }
+                    </div>
+                </div>
+            </section>
+            <section class="sky-form">
+                <h4>LOẠI MÀN HÌNH</h4>
+                <div class="row" style="padding: 20px; padding-left: 5px;">
+                    <div class="col col-4">
+                        <label class="checkbox">
+                            <a href="@Url.Action("List", "Product", new { danhmucId = 3})" style="color: #555;">
+                                Tất cả
+                            </a>
+                        </label>
+                        @foreach (BanMayTinh.Models.DB.LoaiSanPham item in ViewBag.ListLoaiSanPhamManHinh)
+                        {
+                            <label class="checkbox">
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 3, loaisanphamId = item.Id})" style="color: #555;">
+                                    @item.TenLoaiSanPham
+                                </a>
+                            </label>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+        @{ double dgsp = 0;}
+        <div class="cont span_2_of_3">
+            @{
+                List<BanMayTinh.Models.DB.AnhSanPham> listanh = ViewBag.ListAnh;
+
+                <div class="labout span_1_of_a1">
+                    <!-- start product_slider -->
+
+                    <ul id="etalage">
+                        @foreach (BanMayTinh.Models.DB.AnhSanPham item in listanh)
+                        {
+                            <li>
+
+                                <img class="etalage_thumb_image " style="width:50px;height:50px;" src="/Content/images/AnhSanPham/@item.UR_Anh" />
+                                <img class="etalage_source_image" style="width:50px;height:50px;" src="/Content/images/AnhSanPham/@item.UR_Anh" />
+                            </li>
+                        }
+                    </ul>
+
+
+                    <!-- end product_slider -->
+                </div>
+
+
+                <div class="cont1 span_2_of_a1">
+                    <input type="hidden" value="@{ dgsp = @Model.DonGia != null ? (double) @Model.DonGia : 0;}" />
+                    <h3 class="m_3">Tên sản phẩm : @Model.TenSanPham</h3>
+
+                    <div class="price_single">
+
+                        <span class="actual">Giá bán : @dgsp.ToString("N0") VNĐ</span>
+                    </div>
+
+                    <div class="btn_form">
+                        <form method="post" action="@Url.Action("ThemSanPham","Cart", new { MaSP = System.Convert.ToInt64(Model.Id) } )">
+                            <input type="submit" value="Thêm vào giỏ" title="">
+                        </form>
+                    </div>
+                    <ul class="add-to-links">
+                        <li><img src="~/Content/images/wish.png" alt="" /><a href="#">Thêm vào danh sách yêu thích</a></li>
+                    </ul>
+                    <p class="m_desc">Tặng balo,chuột và lót chuột bo viền</p>
+                    <p class="m_desc">Khuyến mãi 100k cho học sinh,sinh viên</p>
+                    <p class="m_desc">Giảm 100k khi thanh toán bằng tài khoản ngân hàng</p>
+
+                    <div class="social_single">
+                        <ul>
+                            <li class="fb"><a href="#"><span> </span></a></li>
+                            <li class="tw"><a href="#"><span> </span></a></li>
+                            <li class="g_plus"><a href="#"><span> </span></a></li>
+                            <li class="rss"><a href="#"><span> </span></a></li>
+                        </ul>
+                    </div>
+                    <div class="toogle">
+                        <h3 class="m_3">Đánh giá sản phẩm</h3>
+                        <p class="m_text">Sức mạnh đáng nể trong thân máy gọn ghẽ</p>
+                        <p class="m_text">Kiểu dáng trẻ trung thanh lịch và năng động</p>
+                        <p class="m_text">Đem lại trải nghiệm âm thanh chuyên nghiệp</p>
+                        <p class="m_text">Tạm biệt mật khẩu rườm rà</p>
+                        <p class="m_text">Mở ra khả năng tương tác linh hoạt</p>
+                        <p class="m_text">Tinh tế đến từng góc máy</p>
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+
+            <div class="toogle">
+                <h3 class="m_3">Cấu hình chi tiết</h3>
+                @if (Model.LoaiSanPham.TenLoaiSanPham != null && Model.TenSanPham != null)
+                {
+                    <p class="m_text">@Model.LoaiSanPham.TenLoaiSanPham : @Model.TenSanPham </p>
+                }
+
+                @if (Model.LoaiSanPham.ThuocTinh1 != null && Model.ThuocTinh1 != null)
+                {
+                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh1 : @Model.ThuocTinh1 </p>
+                }
+
+                @if (Model.LoaiSanPham.ThuocTinh2 != null && Model.ThuocTinh2 != null)
+                {
+                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh2 : @Model.ThuocTinh2 </p>
+                }
+
+                @if (Model.LoaiSanPham.ThuocTinh3 != null && Model.ThuocTinh3 != null)
+                {
+                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh3 : @Model.ThuocTinh3 </p>
+                }
+
+                @if (Model.LoaiSanPham.ThuocTinh4 != null && Model.ThuocTinh4 != null)
+                {
+                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh4 : @Model.ThuocTinh4 </p>
+                }
+                @if (Model.LoaiSanPham.ThuocTinh5 != null && Model.ThuocTinh5 != null)
+                {
+                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh5 : @Model.ThuocTinh5 </p>
+                }
+
+            </div>
+            <br />
+            <br />
+            @*<h3>SẢN PHẨM TƯƠNG TỰ</h3>
+            <ul id="flexiselDemo3">
+                <li><img src="~/Content/images/laptop/laptop1.jpg" /><div class="grid-flex"><a href="#">LG</a><p>17.900</p></div></li>
+                <li><img src="~/Content/images/laptop/laptop6.jpg" /><div class="grid-flex"><a href="#">Lenovo</a><p>15.900</p></div></li>
+                <li><img src="~/Content/images/laptop/laptop3.jpg" /><div class="grid-flex"><a href="#">Asus</a><p>17.790</p></div></li>
+                <li><img src="~/Content/images/laptop/laptop4.png" /><div class="grid-flex"><a href="#">Acer</a><p>17.790</p></div></li>
+                <li><img src="~/Content/images/laptop/laptop5.jpg" /><div class="grid-flex"><a href="#">HP</a><p>16.690</p></div></li>
+            </ul>*@
+            <script type="text/javascript">
+                $(window).load(function () {
+                    $("#flexiselDemo1").flexisel();
+                    $("#flexiselDemo2").flexisel({
+                        enableResponsiveBreakpoints: true,
+                        responsiveBreakpoints: {
+                            portrait: {
+                                changePoint: 480,
+                                visibleItems: 1
+                            },
+                            landscape: {
+                                changePoint: 640,
+                                visibleItems: 2
+                            },
+                            tablet: {
+                                changePoint: 768,
+                                visibleItems: 3
+                            }
+                        }
+                    });
+
+                    $("#flexiselDemo3").flexisel({
+                        visibleItems: 5,
+                        animationSpeed: 1000,
+                        autoPlay: true,
+                        autoPlaySpeed: 3000,
+                        pauseOnHover: true,
+                        enableResponsiveBreakpoints: true,
+                        responsiveBreakpoints: {
+                            portrait: {
+                                changePoint: 480,
+                                visibleItems: 1
+                            },
+                            landscape: {
+                                changePoint: 640,
+                                visibleItems: 2
+                            },
+                            tablet: {
+                                changePoint: 768,
+                                visibleItems: 3
+                            }
+                        }
+                    });
+
+                });
+            </script>
+            <script type="text/javascript" src="~/Content/js/jquery.flexisel.js"></script>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
