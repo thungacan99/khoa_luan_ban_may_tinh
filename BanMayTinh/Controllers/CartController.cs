@@ -202,7 +202,7 @@ namespace BanMayTinh.Controllers
             GioHang gioHang = dbContext.GioHangs.Where(x => x.UserNameKH.Equals(dangnhap.UserName)).FirstOrDefault();
             //GioHang gioHang = dbContext.GioHangs.Where(x => x.UserNameKH.Equals("0394362405")).FirstOrDefault();
 
-            donDH.TrangThai = 0;
+            donDH.TrangThai = 1;
             dbContext.DonDatHangs.Add(donDH);
             dbContext.SaveChanges();
 

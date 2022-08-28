@@ -49,6 +49,7 @@
                     .container-menu .content-div table thead tr th {
                         background: #e5e8ec;
                         border: 1px solid #c7c7c7;
+                        font-weight: bold;
                     }
 
                 .container-menu .content-div table tbody :hover {
@@ -124,11 +125,12 @@
                     <thead class="thead-st">
                         <tr style="background: #faf51a">
                             <th style="width: 120px" class="text-center">Mã đơn hàng</th>
-                            <th style="width: 70px" class="text-center">Ngày đặt</th>
-                            <th style="width: 70px">Ngày giao</th>
+                            <th style="width: 100px" class="text-center">Ngày đặt</th>
+                            <th style="width: 100px">Ngày giao</th>
                             <th style="width: 180px">Tên người nhận</th>
                             <th style="width: 280px">Địa chỉ</th>
                             <th>Yêu cầu</th>
+                            <th style="width: 50px">#</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,6 +143,9 @@
                                 <td>@item.TenNguoiNhan</td>
                                 <td>@item.DiaChi</td>
                                 <td>@item.YeuCau</td>
+                                <td>
+                                    <a href="@Url.Action("CTDonHang", "DonHang", new {idDonHang = item.Id})">Xem</a>
+                                </td>
                             </tr>
                         }
 
