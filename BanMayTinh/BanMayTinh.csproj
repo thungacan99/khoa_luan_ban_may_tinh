@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DonDatHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoaiSanPhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -369,6 +370,11 @@
     <Content Include="Content\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\webfonts\fa-solid-900.woff" />
     <Content Include="Content\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Admin\Views\DonDatHang\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHang\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHang\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHang\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHang\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
