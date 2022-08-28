@@ -17,10 +17,36 @@ namespace BanMayTinh.Controllers
         {
             ViewBag.TongTien = 0;
 
+            DSDonDatHang donDatHang = new DSDonDatHang();
+
+
+            var formName = "Tất cả đơn hàng";
+
+            if (trangthai == 1)
+            {
+                formName = "Đơn hàng chờ xác nhận";
+            }
+            else if (trangthai == 2)
+            {
+                formName = "Đơn hàng đang giao";
+            }
+            else if (trangthai == 3)
+            {
+                formName = "Đơn hàng đã giao";
+            }
+            else if (trangthai == 4)
+            {
+                formName = "Đơn hàng giao thành công";
+            }
+            else if (trangthai == 5)
+            {
+                formName = "Đơn hàng hủy";
+            }
+            donDatHang.FormName = formName;
+
             TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
             if (dangnhap != null)
             {
-                DSDonDatHang donDatHang = new DSDonDatHang();
                 donDatHang.ListDonDatHang = dbContext.DonDatHangs.Where(x => x.UserNameKH.Equals(dangnhap.UserName)).ToList();
                 //GioHang gioHang = dbContext.GioHangs.Where(x => x.UserNameKH.Equals("0394362405")).FirstOrDefault();
 

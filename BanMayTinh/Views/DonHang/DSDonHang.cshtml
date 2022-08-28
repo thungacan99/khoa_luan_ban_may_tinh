@@ -57,16 +57,27 @@
                 }
 
                 .container-menu .content-div table tbody tr td {
-                    height: 34px;
+                    height: 32px;
                     border: 1px solid #c7c7c7;
                     padding: 12px;
                 }
+
+    .form-name {
+        font-weight: bold;
+        font-size: 24px;
+        border: 1px solid #c7c7c7;
+        padding: 8px;
+        background: #e5e8ec;
+        margin-bottom: 12px;
+        text-align: center;
+    }
 </style>
 
 
 <script>
 
 </script>
+
 
 
 
@@ -106,9 +117,13 @@
                 </div>
             </div>
             <div class="content-div">
+                <div class="form-name">
+                    @Model.FormName
+                </div>
                 <table class="table table-bordered table-hover">
                     <thead class="thead-st">
                         <tr style="background: #faf51a">
+                            <th style="width: 120px" class="text-center">Mã đơn hàng</th>
                             <th style="width: 70px" class="text-center">Ngày đặt</th>
                             <th style="width: 70px">Ngày giao</th>
                             <th style="width: 180px">Tên người nhận</th>
@@ -120,9 +135,8 @@
                         @foreach (var item in Model.ListDonDatHang)
                         {
                             <tr>
-                                <td class="text-center">
-                                    @item.NgayDat.ToString("dd/MM/yyyy")
-                                </td>
+                                <td>@item.Id</td>
+                                <td class="text-center">@item.NgayDat.ToString("dd/MM/yyyy")</td>
                                 <td>@item.NgayGiao.ToString("dd/MM/yyyy")</td>
                                 <td>@item.TenNguoiNhan</td>
                                 <td>@item.DiaChi</td>
@@ -137,4 +151,4 @@
     </div>
     <div class="clearfix"></div>
 </div>
-    
+
