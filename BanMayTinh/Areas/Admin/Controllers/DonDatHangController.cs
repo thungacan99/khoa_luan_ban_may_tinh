@@ -28,12 +28,22 @@ namespace BanMayTinh.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DonDatHang loaiSanPham = db.DonDatHangs.Find(id);
-            if (loaiSanPham == null)
+            DonDatHang donDatHang = db.DonDatHangs.Find(id);
+            if (donDatHang == null)
             {
                 return HttpNotFound();
             }
-            return View(loaiSanPham);
+
+            var listHang = new List<SanPham>();
+            foreach (var ddh in donDatHang.ChiTietDonDatHangs)
+            {
+                listHang.Add(ddh.SanPham);
+            }
+
+            ViewBag.ListSanPham = listHang;
+            Console.WriteLine("List San pham = ", listHang);
+            Console.WriteLine("ViewBag.ListSanPham = ", ViewBag.ListSanPham);
+            return View(donDatHang);
         }
 
         // GET: Admin/DonDatHang/Create

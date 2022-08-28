@@ -194,13 +194,13 @@
                         <li><a href="#" class="previous">Trang</a></li>
                         <li class="current">
                             @Html.PagedListPager(Model, page => Url.Action("List",
-                                   new
-                                        {
-                                       page,
-                                       typeSort = ViewBag.CurrentSort,
-                                       danhmucId = ViewBag.CurrentDanhMuc,
-                                       loaisanphamId = ViewBag.CurrentLoaiSanPham,
-                                   })
+                                new
+                                    {
+                                    page,
+                                    typeSort = ViewBag.CurrentSort,
+                                    danhmucId = ViewBag.CurrentDanhMuc,
+                                    loaisanphamId = ViewBag.CurrentLoaiSanPham,
+                                })
                             )
                         </li>
                     </ul>

@@ -3123,3 +3123,58 @@ p.cart a:hover {
 	}
 }	
 
+.list-header {
+	padding: 12px 0 6px 0;
+	display: flex;
+    min-height: 70px;
+	position: relative;
+    align-items: center;
+    padding-left: 16px;
+}
+.list-header .align-right {
+	right: 12px;
+    position: absolute;
+}
+.list-rows {
+	padding: 0 12px;
+}
+
+
+.content {
+	width: 100%;
+	height: 100%;
+	display: flex;	
+}
+
+.content .left-20 {
+	width: 20%;
+	height: 100%;
+}
+
+.content .left-80 {
+	width: 80%;
+	padding: 0 16px;
+}
+
+.item-w-20 {
+	width: 19%;
+	height: 250px;
+	float: left;
+}
+.list-wrapper {
+	background-color: rgb(255, 196, 196);
+}
+
+.attr-row {
+    display: flex;
+    margin-bottom: 7px;
+}
+
+.attr-row  .attribute-name {
+	width: 50%;
+	font-weight: bold;
+}
+
+.attr-row  .attribute-value {
+	width: 50%;
+}
