@@ -3123,3 +3123,43 @@ p.cart a:hover {
 	}
 }	
 
+.list-header {
+	padding: 12px 0 6px 0;
+	display: flex;
+    min-height: 70px;
+	position: relative;
+    align-items: center;
+    padding-left: 16px;
+}
+.list-header .align-right {
+	right: 12px;
+    position: absolute;
+}
+.list-rows {
+	padding: 0 12px;
+}
+
+
+.content {
+	width: 100%;
+	height: 100%;
+	display: flex;	
+}
+
+.content .left-20 {
+	width: 20%;
+	height: 100%;
+}
+
+.content .left-80 {
+	width: 80%;
+}
+
+.item-w-20 {
+	width: 19%;
+    display: inline-block;
+
+}
+.list-wrapper {
+	background-color: rgb(255, 196, 196);
+}

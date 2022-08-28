@@ -5,19 +5,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-
-<div class="card">
-    <div class="card-header">
-        <div class="row" style="padding-bottom: 30px">
-            <div class="col-md-10">
-                <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách đơn hàng</strong>
-            </div>
-            <div class="col-md-1">
-                <a href="@Url.Action("Create", "DonDatHang")" class=" btn btn-success">Thêm Loại Sản Phẩm</a>
-            </div>
+    <div class="list-header">
+            <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách đơn hàng</strong>
+        <div class="align-right">
+            <a href="@Url.Action("Create", "DonDatHang")" class=" btn btn-success ct-btn">Thêm Loại Sản Phẩm</a>
         </div>
     </div>
-    <div class="card-body" style="padding-right: 20px">
+    <div class="list-rows">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr style="background: #faf51a">
@@ -53,8 +47,6 @@
                         </td>
                     </tr>
                 }
-
             </tbody>
         </table>
     </div>
-</div>
