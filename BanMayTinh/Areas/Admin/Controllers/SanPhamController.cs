@@ -51,19 +51,23 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = 
-            "Id,TenSanPham,AnhSanPham,Id_HangSanXuat,Id_LoaiSanPham,ThuocTinh1," +
-            "ThuocTinh2,ThuocTinh3,ThuocTinh4,ThuocTinh5,DonGia")] SanPham sanPham, HttpPostedFileBase UL_anh)
+            "Id,TenSanPham,Id_HangSanXuat,Id_LoaiSanPham,ThuocTinh1," +
+            "ThuocTinh2,ThuocTinh3,ThuocTinh4,ThuocTinh5,DonGia")] SanPham sanPham)
         {
+            HttpPostedFileBase UL_anh = Request.Files["UL_anh"];
             string fname = UL_anh.FileName;
             int id = sanPham.Id;
             string ur = Path.Combine(Server.MapPath("~/Content/images/AnhSanPham/"), fname);
             UL_anh.SaveAs(ur);
 
-            SanPham sp = db.SanPhams.FirstOrDefault(x => x.Id == id);
-            sp.AnhSanPham = fname;
+            //SanPham sp = db.SanPhams.FirstOrDefault(x => x.Id == id);
+            //SanPham sp = new SanPham();
+            //sp.AnhSanPham = fname;
+            //sp.Id = new Random().Next(100, 99999);
 
+            sanPham.AnhSanPham = fname;
             AnhSanPham img = new AnhSanPham();
             img.Id_SanPham = id;
             img.UR_Anh = fname;
