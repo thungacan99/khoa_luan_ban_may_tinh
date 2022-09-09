@@ -1,6 +1,6 @@
 ﻿@using System
 @using BanMayTinh.Models.DB
-@model BanMayTinh.Models.DB.GioHang
+@model BanMayTinh.Models.TienDonHang
 
 @{
     ViewBag.Title = "ChiTietDatHang";
@@ -81,40 +81,40 @@
                                     </tr>
 
 
-                                    <tr>
-                                        <td valign="top"><input type="radio" id="pay_method_8" name="pay_method" value="8" class="pay_option"></td>
-                                        <td valign="top">
-                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_8">Thanh toán qua chuyển khoản qua tài khoản ngân hàng (khuyên dùng)</label></div>
+                                    @*<tr>
+                                            <td valign="top"><input type="radio" id="pay_method_8" name="pay_method" value="8" class="pay_option"></td>
+                                            <td valign="top">
+                                                <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_8">Thanh toán qua chuyển khoản qua tài khoản ngân hàng (khuyên dùng)</label></div>
 
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
 
 
-                                    <tr>
-                                        <td valign="top"><input type="radio" id="pay_method_4" name="pay_method" value="4" class="pay_option"></td>
-                                        <td valign="top">
-                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_4">Thanh toán qua Ngân Lượng (ATM nội địa, Visa, Master)</label></div>
+                                        <tr>
+                                            <td valign="top"><input type="radio" id="pay_method_4" name="pay_method" value="4" class="pay_option"></td>
+                                            <td valign="top">
+                                                <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_4">Thanh toán qua Ngân Lượng (ATM nội địa, Visa, Master)</label></div>
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
 
-                                    <tr>
-                                        <td valign="top"><input type="radio" id="pay_method_10" name="pay_method" value="10" class="pay_option"></td>
-                                        <td valign="top">
-                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_10">Trả góp qua Alepay (Ngân Lượng)</label></div>
+                                        <tr>
+                                            <td valign="top"><input type="radio" id="pay_method_10" name="pay_method" value="10" class="pay_option"></td>
+                                            <td valign="top">
+                                                <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_10">Trả góp qua Alepay (Ngân Lượng)</label></div>
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
 
-                                    <tr>
-                                        <td valign="top"><input type="radio" id="pay_method_11" name="pay_method" value="11" class="pay_option"></td>
-                                        <td valign="top">
-                                            <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_11">Thanh toán trực tuyến (Bằng thẻ ATM/Visa/Master qua cổng VnPay)</label></div>
+                                        <tr>
+                                            <td valign="top"><input type="radio" id="pay_method_11" name="pay_method" value="11" class="pay_option"></td>
+                                            <td valign="top">
+                                                <div class="txt0" style="padding-bottom: 10px;"><label for="pay_method_11">Thanh toán trực tuyến (Bằng thẻ ATM/Visa/Master qua cổng VnPay)</label></div>
 
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>*@
 
 
                                 </tbody>
@@ -132,7 +132,7 @@
                                                 <b>Thành tiền</b>
                                             </td>
                                             <td class="txt2 text-right">
-                                                <strong class="red total-cart-payment"> @ViewData["TongTien"] <u>đ</u></strong><br>
+                                                <strong class="red total-cart-payment"> @Model.tongTien.ToString("N0") <u>VNĐ</u></strong><br>
                                                 <span class="txt_12" style="font-size: 16px; margin-left:-18px;">(Giá chưa bao gồm VAT)</span>
                                             </td>
                                         </tr>
@@ -142,9 +142,9 @@
 
                                 @*<div style="" class="new-cart-button">
 
-                                <input type="submit" class="button button-100 bg-red" value="Đặt hàng">
+                                        <input type="submit" class="button button-100 bg-red" value="Đặt hàng">
 
-                            </div>*@
+                                    </div>*@
 
                             </div>
                             <div class="clear"></div>
@@ -153,31 +153,31 @@
 
                     <div class="c3_col_1">
                         @*<div class="c3_box">
-                        <div class="tbl_cart3">
-                            <table style="width: 100%;background: #f6f6f6;padding: 10px 5px;">
-                                <tbody>
+                                <div class="tbl_cart3">
+                                    <table style="width: 100%;background: #f6f6f6;padding: 10px 5px;">
+                                        <tbody>
 
 
-                                    <tr class="txt_16">
-                                        <td class="txt2">
-                                            <b>Thành tiền</b>
-                                        </td>
-                                        <td class="txt2 text-right">
-                                            <strong class="red total-cart-payment">28.678.000 <u>đ</u></strong><br>
-                                            <span class="txt_12">(Giá chưa bao gồm VAT)</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="clear space2"></div>
-                            <div style="" class="new-cart-button">
+                                            <tr class="txt_16">
+                                                <td class="txt2">
+                                                    <b>Thành tiền</b>
+                                                </td>
+                                                <td class="txt2 text-right">
+                                                    <strong class="red total-cart-payment">28.678.000 <u>đ</u></strong><br>
+                                                    <span class="txt_12">(Giá chưa bao gồm VAT)</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="clear space2"></div>
+                                    <div style="" class="new-cart-button">
 
-                                <input type="submit" class="button button-100 bg-red" value="Đặt hàng">
+                                        <input type="submit" class="button button-100 bg-red" value="Đặt hàng">
 
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>*@
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>*@
                     </div>
                 </div>
             </div>

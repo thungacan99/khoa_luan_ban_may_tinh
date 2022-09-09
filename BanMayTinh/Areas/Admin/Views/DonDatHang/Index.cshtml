@@ -5,48 +5,82 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-    <div class="list-header">
-            <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách đơn hàng</strong>
-        <div class="align-right">
-            <a href="@Url.Action("Create", "DonDatHang")" class=" btn btn-success ct-btn">Thêm Loại Sản Phẩm</a>
-        </div>
+<style>
+    .back {
+        background: #faf51a;
+    }
+
+        .back th:hover {
+            background: #bcfb5d
+        }
+</style>
+
+<div class="list-header">
+    <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách đơn hàng</strong>
+</div>
+@using (Html.BeginForm("TimKiemDonHang", "DonDatHang"))
+{
+    <div class="form-group form-inline" style="padding-left: 20%">
+        Tìm Đơn Hàng: <input type="text" name="name" placeholder="Nhập từ khóa cần tìm" style="width: 400px" />
+        <input type="submit" value="Tìm kiếm" />
     </div>
-    <div class="list-rows">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr style="background: #faf51a">
-                    <th style="width: 50px" class="text-center">ID</th>
-                    <th>Tên khách hàng</th>
-                    <th style="width: 180px">Số điện thoại</th>
-                    <th style="width: 180px">Ngày đặt</th>
-                    <th style="width: 180px">Ngày giao</th>
-                    <th style="width: 150px">Tên người nhận</th>
-                    <th style="width: 150px">Địa chỉ</th>
-                    <th style="padding-right: 10px">Yêu cầu</th>
-                    @* <th style="padding-right: 10px">Trạng thái</th> *@
+}
+<div class="list-rows" style="margin-bottom: 10%">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="back">
+                <th style="width: 100px" class="text-center">ID</th>
+                <th class="text-center" style="width: 250px">username khách hàng</th>
+                <th>Số điện thoại</th>
+                <th>Ngày đặt</th>
+                <th>Ngày giao</th>
+                @*<th style="width: 150px">Tên người nhận</th>
+                    <th style="width: 200px">Địa chỉ</th>*@
+                <th style="padding-right: 10px">Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.list)
+            {
+                <tr>
+                    <td class="text-center">
+                        <a href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">@item.Id</a>
+                    </td>
+                    <td class="text-center">@item.UserNameKH</td>
+                    <td>@item.SoDienThoaiNguoiNhan</td>
+                    <td>@item.NgayDat.ToString("dd/MM/yyyy")</td>
+                    <td>@item.NgayGiao.ToString("dd/MM/yyyy")</td>
+                    @*<td>@item.TenNguoiNhan</td>
+                        <td>@item.DiaChi</td>*@
+                    @*<td>@item.YeuCau</td>*@
+                    <td>
+                        @if (item.TrangThai == 1)
+                        {
+                            <a style="color: #FFAF02" href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Chờ xác nhận</a>
+                        }
+                        @if (item.TrangThai == 2)
+                        {
+                            <a style="color: #1b46ee" href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Đang giao hàng</a>
+                        }
+                        @if (item.TrangThai == 3)
+                        {
+                            <a style="color: forestgreen" href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Đã giao hàng</a>
+                        }
+                        @if (item.TrangThai == 4)
+                        {
+                            <a style="color: forestgreen" href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Giao thành công</a>
+                        }
+                        @if (item.TrangThai == 5)
+                        {
+                            <a style="color: red" href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Giao thất bại</a>
+                        }
+                        @if (item.TrangThai == 6)
+                        {
+                            <a style="color: red" href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Đơn hủy</a>
+                        }
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="text-center">
-                            @item.Id
-                        </td>
-                        <td>@item.UserNameKH</td>
-                        <td>@item.SoDienThoaiNguoiNhan</td>
-                        <td>@item.NgayDat</td>
-                        <td>@item.NgayGiao</td>
-                        <td>@item.TenNguoiNhan</td>
-                        <td>@item.YeuCau</td>
-                        @* <td>@item.TrangThai</td> *@
-                        <td>
-                            <a href="@Url.Action("Details", "DonDatHang", new {@id = item.Id})">Xem</a>
-                            <a class="text-warning" href="@Url.Action("Edit", "DonDatHang", new {@id = item.Id})">Sửa</a>
-                            <a class="text-danger" href="@Url.Action("Delete", "DonDatHang", new {@id = item.Id})">Xóa</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
+</div>

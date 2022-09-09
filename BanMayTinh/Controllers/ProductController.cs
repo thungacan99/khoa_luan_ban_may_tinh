@@ -147,9 +147,11 @@ namespace BanMayTinh.Controllers
             ViewBag.ListLoaiSanPhamManHinh = ListLoaiSanPhamManHinh;
 
             var sanpham = context.SanPhams.Find(id);
-            var listanh = context.AnhSanPhams.Where(x => x.Id == id).ToList();
+            //var listanh = context.AnhSanPhams.Where(x => x.Id == id);
+            var listanh = sanpham.AnhSanPhams.ToList();
             ViewBag.ListAnh = listanh;
             return View("Detail", sanpham);
         }
+ 
     }
 }

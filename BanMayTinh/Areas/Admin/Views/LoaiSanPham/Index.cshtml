@@ -4,7 +4,47 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+<style>
+    .back {
+        background: #faf51a;
+    }
 
+        .back th:hover {
+            background: #bcfb5d
+        }
+
+    .btn_sua {
+        background: #2ca01c;
+        display: block;
+        color: #fff;
+        padding: 12px 10px;
+        border: 2px solid #000000;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-top: 2%;
+        margin-left: 80%;
+        margin-right: 5%;
+    }
+
+        .btn_sua:hover {
+            background-color: #a4a4a4;
+        }
+
+        .btn_sua a {
+            color: #fff;
+            padding: 12px;
+            font-size: 15px;
+            text-align: center;
+            margin: 0 0 30px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+</style>
+
+@{
+    int idXoa = 0;
+}
 
 <div class="card">
     <div class="card-header">
@@ -12,23 +52,23 @@
             <div class="col-md-10">
                 <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách loại sản phẩm</strong>
             </div>
-            <div class="col-md-1">
-                <a href="@Url.Action("Create", "LoaiSanPham")" class=" btn btn-success">Thêm Loại Sản Phẩm</a>
+            <div class="btn_sua">
+                <a href="@Url.Action("Create", "LoaiSanPham")">Thêm Loại Sản Phẩm</a>
             </div>
         </div>
     </div>
     <div class="card-body" style="padding-right: 20px">
         <table class="table table-bordered table-hover">
             <thead>
-                <tr style="background: #faf51a">
-                    <th style="width: 50px" class="text-center">ID</th>
-                    <th>Tên Loại Sản Phẩm</th>
-                    <th style="width: 180px">Thuộc tính 1</th>
-                    <th style="width: 180px">Thuộc tính 2</th>
-                    <th style="width: 180px">Thuộc tính 3</th>
-                    <th style="width: 150px">Thuộc tính 4</th>
-                    <th style="width: 150px">Thuộc tính 5</th>
-                    <th style="padding-right: 10px">Chức năng</th>
+                <tr class="back">
+                    <th style="width: 100px" class="text-center">ID</th>
+                    <th style="width: 220px">Tên Loại Sản Phẩm</th>
+                    <th>Thuộc tính 1</th>
+                    <th>Thuộc tính 2</th>
+                    <th>Thuộc tính 3</th>
+                    <th>Thuộc tính 4</th>
+                    <th>Thuộc tính 5</th>
+                    <th style="padding-right: 10px"></th>
                 </tr>
             </thead>
             <tbody>
@@ -36,23 +76,137 @@
                 {
                     <tr>
                         <td class="text-center">
-                            @item.Id
+                            <a href="@Url.Action("Details", "LoaiSanPham", new {@id = item.Id})">@item.Id</a>
                         </td>
-                        <td>@item.TenLoaiSanPham</td>
+                        <td><a style="color: #000000" href="@Url.Action("Details", "LoaiSanPham", new {@id = item.Id})">@item.TenLoaiSanPham</a></td>
                         <td>@item.ThuocTinh1</td>
                         <td>@item.ThuocTinh2</td>
                         <td>@item.ThuocTinh3</td>
                         <td>@item.ThuocTinh4</td>
                         <td>@item.ThuocTinh5</td>
                         <td>
-                            <a href="@Url.Action("Details", "LoaiSanPham", new {@id = item.Id})">Xem</a>
-                            <a class="text-warning" href="@Url.Action("Edit", "LoaiSanPham", new {@id = item.Id})">Sửa</a>
-                            <a class="text-danger" href="@Url.Action("Delete", "LoaiSanPham", new {@id = item.Id})">Xóa</a>
+                            <a onclick="showConfirmDelete(@item.SanPhams.Count, @item.Id)" class="text-danger" style="cursor:pointer;">Xóa</a>
+                            <a id="del-btn-@item.Id" href="@Url.Action("Delete", "LoaiSanPham", new {@id = item.Id})" class="hide-item"></a>
                         </td>
                     </tr>
                 }
 
             </tbody>
         </table>
+    </div>
+</div>
+
+<style>
+
+    .hide-item {
+        display: none !important;
+    }
+
+    .bx-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #0000006b;
+        display: flex;
+    }
+
+        .bx-popup .container {
+            padding: 20px;
+            background: #fff;
+            width: max-content;
+            border-radius: 4px;
+            cursor: pointer;
+            height: fit-content;
+            align-self: center;
+        }
+
+            .bx-popup .container .title {
+                font-weight: bold;
+                color: #000 !important;
+                height: 50px;
+            }
+
+            .bx-popup .container .item-confirm {
+                display: flex;
+                justify-content: space-around;
+            }
+
+    .a-btn {
+        color: #fff;
+        cursor: pointer;
+        background-color: #2ca01c;
+        text-decoration: none !important;
+        padding: 12px;
+        border-radius: 4px;
+        margin-left: 12px;
+        text-align: center;
+    }
+
+    .bg-cancel {
+        background-color: #b40d0d !important;
+    }
+
+    .a-btn:hover {
+        color: #fff;
+    }
+</style>
+
+
+<script>
+    function showConfirmDelete(soLuongSP, id) {
+        if (soLuongSP > 0) {
+            let popup = document.querySelector(".popup-waring-not-delete");
+            if (popup) {
+                popup.classList.remove("hide-item");
+            }
+        } else {
+            // show confifm có chắc chắn muốn xóa không?
+            let popup = document.querySelector(".popup-confirm-delete");
+            if (popup) {
+                popup.classList.remove("hide-item");
+                let actionYes = popup.querySelector(".action-yes");
+                if (actionYes) {
+                    actionYes.setAttribute("onclick", "deleteItem(" + id + ")")
+                }
+            }
+        }
+    }
+
+    function hidePopup(className) {
+        let popup = document.querySelector(className);
+        if (popup) {
+            popup.classList.add("hide-item");
+        }
+    }
+
+    function deleteItem(id) {
+        let delEl = document.getElementById("del-btn-" + id);
+        if (delEl) {
+            window.location = delEl.href;
+        }
+    }
+</script>
+<div class="bx-popup popup-waring-not-delete hide-item">
+    <div class="container">
+        <div class="title">
+            Không thể xóa loại sản phẩm này. Loại sản phẩm này đang tồn tại nhiều sản phẩm con.
+        </div>
+        <div class="item-confirm">
+            <a onclick="hidePopup('.popup-waring-not-delete')" class="a-btn">Đóng</a>
+        </div>
+    </div>
+</div>
+
+<div class="bx-popup popup-confirm-delete hide-item">
+    <div class="container">
+        <div class="title">
+            Bạn có chắc chắn muốn xóa sản phẩm này không?
+        </div>
+        <div class="item-confirm">
+            <a onclick="hidePopup('.popup-confirm-delete')" class="a-btn">Không</a>
+            <a onclick="deleteItem()" class="action-yes a-btn" style="width: 70px;">Có</a>
+        </div>
     </div>
 </div>

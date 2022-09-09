@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoanhThuController.cs" />
     <Compile Include="Areas\Admin\Controllers\DonDatHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoaiSanPhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\js\chart.min.js" />
     <Content Include="Areas\Sprites.6bf3e5c7.svg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -375,6 +377,11 @@
     <Content Include="Areas\Admin\Views\DonDatHang\Details.cshtml" />
     <Content Include="Areas\Admin\Views\DonDatHang\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DonDatHang\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Logout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanhThu\DoanhThu.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHang\DSTrangThai.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -406,6 +413,7 @@
     <Content Include="Views\Cart\XacNhanDatHang.cshtml" />
     <Content Include="Views\DonHang\DSDonHang.cshtml" />
     <Content Include="Views\DonHang\CTDonHang.cshtml" />
+    <Content Include="Views\Home\Laptop77.cshtml" />
     <None Include="Web.Debug.Config">
       <DependentUpon>Web.Config</DependentUpon>
     </None>

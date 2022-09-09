@@ -18,22 +18,21 @@
     <div class="header-top">
         <div class="wrap">
             <div class="logo">
-                <a href="index.html"><img src="~/Content/images/laptop/logo.png" alt="" /></a>
+                <a href="#"><img src="~/Content/images/laptop/logo.png" alt="" /></a>
             </div>
             <div class="cssmenu">
-                <ul>
-                    <li><a href="@Url.Action("GioHang", "Cart")">Giỏ hàng</a></li>
-                    @if (Session["LogIn"] != null)
-                    {
-                        <li class="active"><a href="@Url.Action("DangXuat", "Home")">Đăng xuất</a></li>
-                    }
-                    else
-                    {
-                        <li class="active"><a href="@Url.Action("LogIn", "Home")">Đăng nhập</a></li>
-                    }
+                    <ul>
+                        @if (Session["LogIn"] != null)
+                        {
+                            <li class="active"><a href="@Url.Action("Logout", "Admin")">Đăng xuất</a></li>
+                        }
+                        else
+                        {
+                            <li class="active"><a href="@Url.Action("Login", "Admin")">Đăng nhập</a></li>
+                        }
 
-                </ul>
-            </div>
+                    </ul>
+                </div>
             <div class="clear"></div>
         </div>
         <hr width="100%">
@@ -43,7 +42,7 @@
             <div class="list-group" style="padding-left: 10px">
                 <ul>
                     <li>
-                        <a  href="@Url.Action("Index", "DonDatHang")" class="list-group-item list-group-item-action">
+                        <a href="@Url.Action("Index", "DonDatHang")" class="list-group-item list-group-item-action">
                             Quản Lý Đơn Hàng
                         </a>
                     </li>
@@ -57,6 +56,16 @@
                             Danh Sách Sản Phẩm
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("DoanhThu", "DoanhThu")" class="list-group-item list-group-item-action">
+                            Báo Cáo Doanh Thu
+                        </a>
+                    </li>
+                    @*<li>
+                        <a href="@Url.Action("#", "#")" class="list-group-item list-group-item-action">
+                            Quản lý tài khoản
+                        </a>
+                    </li>*@
                 </ul>
             </div>
         </div>
@@ -66,13 +75,64 @@
     </div>
 
     @* <div class="card">
-        <div class="card-header">
-            <div class="row">
+            <div class="card-header">
+                <div class="row">
 
+                </div>
+            </div>
+        </div> *@
+
+    <div class="footer" style="margin-top: 5%">
+        <div class="footer-top">
+            <div class="wrap">
+                <div class="col_1_of_footer-top span_1_of_footer-top">
+                    <ul class="f_list">
+                        <li><img src="~/Content/images/f_icon.png" alt="" /><span class="delivery">Miễn phí vận chuyển cho đơn hàng từ 1.000.000vnđ</span></li>
+                    </ul>
+                </div>
+                <div class="col_1_of_footer-top span_1_of_footer-top">
+                    <ul class="f_list">
+                        <li><img src="~/Content/images/f_icon1.png" alt="" /><span class="delivery">Chăm sóc khách hàng :<span class="orange"> 0123456789( miễn phí )</span></span></li>
+                    </ul>
+                </div>
+                <div class="col_1_of_footer-top span_1_of_footer-top">
+                    <ul class="f_list">
+                        <li><img src="~/Content/images/f_icon2.png" alt="" /><span class="delivery">Được nhận xét là cửa hàng uy tín, chất lượng</span></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
             </div>
         </div>
-    </div> *@
+        <div class="footer-middle">
+                <div class="wrap">
+                    <div class="section group">
+                        <div class="col_1_of_middle span_1_of_middle">
+                            <dl id="sample" class="dropdown">
+                                <dt><a></a></dt>
+                                <dd>
+                                    <ul>
+                                        <li><a>Australia<img class="flag" src="~/Content/images/as.png" alt="" /><span class="value">AS</span></a></li>
+                                        <li><a>Sri Lanka<img class="flag" src="~/Content/images/srl.png" alt="" /><span class="value">SL</span></a></li>
+                                        <li><a>Newziland<img class="flag" src="~/Content/images/nz.png" alt="" /><span class="value">NZ</span></a></li>
+                                        <li><a>Pakistan<img class="flag" src="~/Content/images/pk.png" alt="" /><span class="value">Pk</span></a></li>
+                                        <li><a>United Kingdom<img class="flag" src="~/Content/images/uk.png" alt="" /><span class="value">UK</span></a></li>
+                                        <li><a>United States<img class="flag" src="~/Content/images/us.png" alt="" /><span class="value">US</span></a></li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col_1_of_middle span_1_of_middle" style="padding: 5%">
+                            <ul class="f_list1">
+                                <li>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+    </div>
 
-@RenderSection("footer", required: false)
 </body>
 </html>

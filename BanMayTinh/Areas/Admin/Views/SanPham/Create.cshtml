@@ -5,12 +5,16 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-@using (Html.BeginForm("Create","SanPham", FormMethod.Post, new { enctype ="multipart/form-data" }))
+@using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <style>
+
+        .pd-input-imp{
+            padding-top: 20px;
+        }
         .hide-item {
             display: none;
         }
@@ -80,11 +84,15 @@
         }
     </script>
 
+    <div class="tiêu-đề-giỏ-hàng" style=" width: 90%">
+        <h4>THÊM SẢN PHẨM</h4>
+    </div>
+
     <div class="cart">
         <div class="cart-header">
             <div class="row">
                 <div class="clo-md-6">
-                    <h4 style="font-size:xx-large">Thêm Sản Phẩm </h4>
+                    <h4 style="font-size:xx-large"></h4>
                 </div>
                 <div class="clo-md-6 text-right" style="padding-right: 150px">
                     <a href="@Url.Action("Index", "SanPham")">Quay lại</a>
@@ -92,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="cart-body" style="padding-top: 30px; padding-right: 20px">
+        <div class="cart-body" style="padding-top: 30px; padding-right: 20px; margin-bottom: 10%">
             <div class="form-group">
                 <label class="label-item">
                     Chọn Hãng Sản Xuất
@@ -206,16 +214,16 @@
                 </div>
             </div>
             @*<div class="form-group">
-                <label class="label-item">
-                    Hình Ảnh
-                </label>
-                <div class="item-props">
-                    <div class="item-input">
-                        @Html.EditorFor(model => model.AnhSanPham, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AnhSanPham, "", new { @class = "text-danger" })
+                    <label class="label-item">
+                        Hình Ảnh
+                    </label>
+                    <div class="item-props">
+                        <div class="item-input">
+                            @Html.EditorFor(model => model.AnhSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AnhSanPham, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
             <p></p>
 
             <div class="form-group">
@@ -224,7 +232,11 @@
                 </label>
                 <form method="post" enctype="multipart/form-data"></form>
                 <div class="form-group">
-                    <input type="file" id="UL_anh" name="UL_anh" accept="image/*" />
+                    <input type="file" id="UL_anh1" name="UL_anh1" accept="image/*" class="pd-input-imp" />
+                    <input type="file" id="UL_anh2" name="UL_anh2" accept="image/*" class="pd-input-imp" />
+                    <input type="file" id="UL_anh3" name="UL_anh3" accept="image/*" class="pd-input-imp" />
+                    <input type="file" id="UL_anh4" name="UL_anh4" accept="image/*" class="pd-input-imp" />
+                    <input type="file" id="UL_anh5" name="UL_anh5" accept="image/*" class="pd-input-imp" />
                 </div>
             </div>
 

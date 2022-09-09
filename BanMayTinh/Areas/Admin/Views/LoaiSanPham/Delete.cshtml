@@ -5,77 +5,166 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>LoaiSanPham</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenLoaiSanPham)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenLoaiSanPham)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh3)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh4)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh4)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh5)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh5)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_DanhMuc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id_DanhMuc)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<style>
+    .del_category {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
     }
+
+        .del_category h4 {
+            color: #fff;
+            padding: 12px;
+            font-size: 20px;
+            text-align: center;
+            margin: 0 0 30px;
+            border-radius: 3px;
+        }
+
+    .btn-flex {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 10px;
+    }
+
+    .btn_xoa {
+        background: #d70606;
+        display: block;
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 3px;
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-left: 10px;
+    }
+
+        .btn_xoa a {
+            color: #fff;
+            padding: 12px;
+            font-size: 15px;
+            text-align: center;
+            margin: 0 0 30px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+    /*.btn_xoa:hover {
+            background: #a4a4a4 !important;
+        }
+
+        .btn_xoa button:hover {
+            background: #a4a4a4 !important;
+        }*/
+
+    .btn_huy {
+        background: #a4a4a4;
+        display: block;
+        color: #fff;
+        padding: 15px 20px;
+        border-radius: 3px;
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+        .btn_huy a {
+            color: #fff;
+            padding: 12px;
+            font-size: 15px;
+            text-align: center;
+            margin: 0 0 30px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+    .tb {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+        .tb .label-info {
+            border: 1px solid #c7c7c7;
+            padding: 12px;
+            width: 15%;
+            margin-left: 20%;
+            font-weight: bold;
+            background-color: #e5e8ec !important;
+        }
+
+            .tb .label-info:hover {
+                background-color: #dbf7f1 !important;
+            }
+
+        .tb .value-info {
+            width: 40%;
+            border: 1px solid #c7c7c7;
+            padding: 12px;
+            color: #000000
+        }
+
+            .tb .value-info:hover {
+                background-color: #dbf7f1 !important;
+            }
+</style>
+
+
+
+<div class="" style="padding-bottom: 0">
+    <div class="" style="padding: 0 20px 64px 12px;">
+
+        <div class="del_category" style="background-color: #d70606 !important ">
+            <h4>BẠN CÓ CHẮC MUỐN XÓA LOẠI SẢN PHẨM NÀY?</h4>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="btn-flex">
+                <div class="btn_huy">
+                    <a href="@Url.Action("Index", "LoaiSanPham")">Hủy</a>
+                </div>
+                <div>
+                    <input type="submit" value="Xóa" class="btn_xoa" style="border-color: #d70606" />
+                    @*<button style="background: #d70606; border:none;" class="button" type="submit">Xóa</button>*@
+                </div>
+                <div class="clearfix">
+
+                </div>
+            </div>
+        }
+        @*<div style="display: flex">
+            <a class="btn_huy" href="@Url.Action("Index", "LoaiSanPham")">Hủy</a>
+            <a class="btn_luu" href="@Url.Action("DeleteConfirmed", "LoaiSanPham", new {id = Model.Id})">Xóa</a>
+        </div>*@
+
+        <div class="tb">
+            <div style="display: flex">
+                <div class="label-info">Loại sản phẩm: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.TenLoaiSanPham)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 1: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh1)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 2: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh2)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 3: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh3)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 4: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh4)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 5: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh5)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Danh mục: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.Id_DanhMuc)</div>
+            </div>
+        </div>
+    </div>
 </div>

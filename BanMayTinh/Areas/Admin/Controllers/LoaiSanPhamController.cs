@@ -17,7 +17,7 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // GET: Admin/LoaiSanPham
         public ActionResult Index()
         {
-            var list = db.LoaiSanPhams.ToList();
+            var list = db.LoaiSanPhams.OrderByDescending(x => x.Id).ToList();
             return View("Index", list);
         }
 
@@ -93,17 +93,20 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // GET: Admin/LoaiSanPham/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            LoaiSanPham loaiSP = db.LoaiSanPhams.Where(x => x.Id == id).FirstOrDefault();
+            if(loaiSP != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if(loaiSP.SanPhams.Count == 0)
+                {
+                    db.LoaiSanPhams.Remove(loaiSP);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            LoaiSanPham loaiSanPham = db.LoaiSanPhams.Find(id);
-            if (loaiSanPham == null)
-            {
-                return HttpNotFound();
-            }
-            return View(loaiSanPham);
+            return View(loaiSP);
         }
+
+
 
         // POST: Admin/LoaiSanPham/Delete/5
         [HttpPost, ActionName("Delete")]

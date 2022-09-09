@@ -6,14 +6,78 @@
 @using BanMayTinh.Models.DB
 @model BanMayTinh.Models.ProductsModel
 
+<style>
+    .tensp a {
+        color: #000000;
+        text-decoration: none
+    }
+
+        .tensp a:hover {
+            color: #0247d6
+        }
+
+    .btn_sua {
+        background: #2ca01c;
+        display: block;
+        color: #fff;
+        padding: 12px 17px;
+        border: 2px solid #000000;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        margin-left: 83%;
+        margin-right: 4%;
+    }
+
+        .btn_sua:hover {
+            background-color: #a4a4a4;
+        }
+
+        .btn_sua a {
+            color: #fff;
+            padding: 12px;
+            font-size: 15px;
+            text-align: center;
+            margin: 0 0 30px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+    .item-view {
+        width: 19%;
+        height: 270px;
+        float: left;
+        border: 1px solid #d9dcdf;
+        margin: 8px 4px;
+        border-radius: 5px
+    }
+
+        .item-view:hover {
+            border: 3px solid #2ffdf0;
+        }
+
+    .grid_img {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .ic-a-delete {
+        border: 1px solid #d9dcdf;
+        padding: 3px 5px;
+        border-radius: 4px;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+</style>
 
 <div style="padding-bottom:20px;">
     <div class="row">
         <div class="col-md-10">
             <strong class="text-uppercase text-danger" style="font-size: x-large">Danh sách sản phẩm</strong>
         </div>
-        <div class="text-right col-md-1" style="padding-bottom: 5px">
-            <a href="@Url.Action("Create", "SanPham")" class=" btn btn-success"> Thêm Sản Phẩm </a>
+        <div class="btn_sua">
+            <a href="@Url.Action("Create", "SanPham")">Thêm Sản Phẩm</a>
         </div>
     </div>
 </div>
@@ -24,23 +88,26 @@
         for (int i = count - 1; i >= 0; i--)
         {
             <div style="display: none;">@Model.danhSach.ElementAt(i).Id</div>
-            <div class="item-w-20">
-                <div>
-                    <a href="@Url.Action("Details", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })"
-                class="text-primary">Xem</a>
-                    <a href="@Url.Action("Edit", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })"
-                class="text-success">Sửa</a>
-                    <a href="@Url.Action("#", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })"
-                class="text-danger">Xóa</a>
+            <div class="item-view">
+                <div style="text-align:end;">
+                    @*<a href="@Url.Action("Details", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })" class="text-primary">Xem</a>
+                        <a href="@Url.Action("Edit", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })" class="text-success">Sửa</a>*@
+                    <a onclick="showConfirmDelete(@Model.danhSach.ElementAt(i).ChiTietDonDatHangs.Count, @Model.danhSach.ElementAt(i).Id)" class="text-danger ic-a-delete" style="">✖</a>
+                    <a id="del-btn-@Model.danhSach.ElementAt(i).Id" href="@Url.Action("Delete", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })" class="hide-item"></a>
                 </div>
                 <div class="grid_img">
                     <div style="padding-bottom:10px">
-                        <img style="max-height: 150px; max-width: 150px"
-                    src="~/Content/images/AnhSanPham/@Model.danhSach.ElementAt(i).AnhSanPham" alt="" />
+                        <a href="@Url.Action("Details", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })">
+                            <img style="max-height: 120px; max-width: 150px"
+                                 src="~/Content/images/AnhSanPham/@Model.danhSach.ElementAt(i).AnhSanPham" alt="" />
+                        </a>
+
                     </div>
                 </div>
-                <div>
-                    <h3 class="m_1">@Model.danhSach.ElementAt(i).TenSanPham</h3>
+                <hr width="90%">
+                <div class="tensp" style="margin: 0px 5px">
+                    <a href="@Url.Action("Details", "SanPham", new { id = Model.danhSach.ElementAt(i).Id })">@Model.danhSach.ElementAt(i).TenSanPham</a>
+                    @*<h3 class="m_1">@Model.danhSach.ElementAt(i).TenSanPham</h3>*@
                 </div>
             </div>
         }
@@ -51,4 +118,121 @@
             <h4>Shop của bạn hiện chưa có sản phẩm </h4>
         </div>
     }
+</div>
+
+
+
+<style>
+
+    .hide-item {
+        display: none !important;
+    }
+
+    .bx-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #0000006b;
+        display: flex;
+    }
+
+        .bx-popup .container {
+            padding: 20px;
+            background: #fff;
+            width: max-content;
+            border-radius: 4px;
+            cursor: pointer;
+            height: fit-content;
+            align-self: center;
+        }
+
+            .bx-popup .container .title {
+                font-weight: bold;
+                color: #000 !important;
+                height: 50px;
+            }
+
+            .bx-popup .container .item-confirm {
+                display: flex;
+                justify-content: space-around;
+            }
+
+    .a-btn {
+        color: #fff;
+        cursor: pointer;
+        background-color: #2ca01c;
+        text-decoration: none !important;
+        padding: 12px;
+        border-radius: 4px;
+        margin-left: 12px;
+        text-align: center;
+    }
+
+    .bg-cancel {
+        background-color: #b40d0d !important;
+    }
+
+    .a-btn:hover {
+        color: #fff;
+    }
+</style>
+
+
+<script>
+    function showConfirmDelete(soLuongSP, id) {
+        if (soLuongSP > 0) {
+            let popup = document.querySelector(".popup-waring-not-delete");
+            if (popup) {
+                popup.classList.remove("hide-item");
+            }
+        } else {
+            // show confifm có chắc chắn muốn xóa không?
+            let popup = document.querySelector(".popup-confirm-delete");
+            if (popup) {
+                popup.classList.remove("hide-item");
+                let actionYes = popup.querySelector(".action-yes");
+                if (actionYes) {
+                    actionYes.setAttribute("onclick", "deleteItem(" + id + ")")
+                }
+            }
+        }
+    }
+
+    function hidePopup(className) {
+        let popup = document.querySelector(className);
+        if (popup) {
+            popup.classList.add("hide-item");
+        }
+    }
+
+    function deleteItem(id) {
+        let delEl = document.getElementById("del-btn-" + id);
+        if (delEl) {
+            window.location = delEl.href;
+        }
+    }
+</script>
+<div class="bx-popup popup-waring-not-delete hide-item">
+    <div class="container">
+        <div class="title">
+            Không thể xóa sản phẩm này vì đã có đơn hàng phát sinh trước đó.
+        </div>
+        <div class="item-confirm">
+            <a onclick="hidePopup('.popup-waring-not-delete')" class="a-btn">Đóng</a>
+        </div>
+    </div>
+</div>
+
+<div class="bx-popup popup-confirm-delete hide-item">
+    <div class="container">
+        <div class="title">
+            Bạn có chắc chắn muốn xóa sản phẩm này không?
+        </div>
+        <div class="item-confirm">
+            <a onclick="hidePopup('.popup-confirm-delete')" class="a-btn">Không</a>
+            <a onclick="deleteItem()" class="action-yes a-btn" style="width: 70px;">Có</a>
+        </div>
+    </div>
 </div>

@@ -31,6 +31,8 @@ namespace BanMayTinh.Models.DB
         [StringLength(30)]
         public string Email { get; set; }
 
+        public int? Quyen { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GioHang> GioHangs { get; set; }
     }

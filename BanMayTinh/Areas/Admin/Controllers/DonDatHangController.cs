@@ -17,8 +17,40 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // GET: Admin/DonDatHang
         public ActionResult Index()
         {
-            var list = db.DonDatHangs.ToList();
-            return View("Index", list);
+            var list = db.DonDatHangs.OrderByDescending(x => x.Id).ToList();
+            ViewBag.list = list;
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
+            {
+                return View("Index", ViewBag.list);
+            }
+            return RedirectToAction("Login", "Admin");
+        }
+
+
+        public ActionResult TimKiemDonHang(String name)
+        {
+            //DonDatHang ddh = new DonDatHang();
+            //ddh = db.DonDatHangs.Where(x => x.Id == id).FirstOrDefault();
+            var list = db.DonDatHangs.Where(x => x.UserNameKH.Contains(name) || 
+                                                 x.SoDienThoaiNguoiNhan.Contains(name) ||
+                                                 x.Id.ToString().Contains(name)).ToList();
+            ViewBag.list = list;
+            return View("Index", ViewBag.list);
+            //ProductsModel rs = new ProductsModel();
+            //rs.danhSach = db.SanPhams.Where(u => u.TenSanPham.Contains(name)).ToList();
+            //return View(rs);
+        }
+
+        public ActionResult DSTrangThai(int? trangthai)
+        {
+            var list = db.DonDatHangs.Where(x => x.TrangThai == trangthai).ToList();
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
+            {
+                return View(list);
+            }
+            return RedirectToAction("Login", "Admin");
         }
 
         // GET: Admin/DonDatHang/Details/5
@@ -29,27 +61,30 @@ namespace BanMayTinh.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             DonDatHang donDatHang = db.DonDatHangs.Find(id);
-            if (donDatHang == null)
-            {
-                return HttpNotFound();
-            }
 
-            var listHang = new List<SanPham>();
-            foreach (var ddh in donDatHang.ChiTietDonDatHangs)
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            var listHang = donDatHang.ChiTietDonDatHangs;
+            if (dangnhap != null && dangnhap.Quyen == 1)
             {
-                listHang.Add(ddh.SanPham);
+                if (donDatHang == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ListSanPham = listHang;
+                return View(donDatHang);
             }
-
-            ViewBag.ListSanPham = listHang;
-            Console.WriteLine("List San pham = ", listHang);
-            Console.WriteLine("ViewBag.ListSanPham = ", ViewBag.ListSanPham);
-            return View(donDatHang);
+            return RedirectToAction("Login", "Admin");
         }
 
         // GET: Admin/DonDatHang/Create
         public ActionResult Create()
         {
-            return View();
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Admin");
         }
 
         // POST: Admin/DonDatHang/Create
@@ -72,16 +107,21 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // GET: Admin/DonDatHang/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             DonDatHang loaiSanPham = db.DonDatHangs.Find(id);
-            if (loaiSanPham == null)
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                if (loaiSanPham == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(loaiSanPham);
             }
-            return View(loaiSanPham);
+            return RedirectToAction("Login", "Admin");
         }
 
         // POST: Admin/DonDatHang/Edit/5
@@ -134,5 +174,52 @@ namespace BanMayTinh.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+        /// <summary>
+        /// Hàm này để cập nhật trạng thái của đơn hàng
+        /// </summary>
+        /// <param name="donDH"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CapNhatTTDonHang(int idDonHang, int trangThai = -1)
+        {
+            var donhang = db.DonDatHangs.Where(a => a.Id == idDonHang).FirstOrDefault();
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
+            {
+                if (trangThai != -1)
+                {
+                    donhang.TrangThai = (int)trangThai;
+                }
+                else
+                {
+                    donhang.TrangThai = donhang.TrangThai + 1;
+                }
+                db.Entry(donhang).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", "DonDatHang", new { @id = idDonHang });
+            }
+            return RedirectToAction("Login", "Admin");
+        }
+
+        /// <summary>
+        /// Thực hiện chỉnh sửa thông tin đơn hàng
+        /// </summary>
+        /// <param name="donDH"></param>
+        /// <returns></returns>
+        public ActionResult ChinhSuaTTDonHang([Bind(Include = "Id, UserNameKH, " +
+            "SoDienThoaiNguoiNhan, NgayDat, NgayGiao, TenNguoiNhan, DiaChi, YeuCau, TrangThai")] DonDatHang donDH)
+        {
+            var donhang = db.DonDatHangs.Where(a => a.Id == donDH.Id).FirstOrDefault();
+            donhang.SoDienThoaiNguoiNhan = donDH.SoDienThoaiNguoiNhan;
+            donhang.TenNguoiNhan = donDH.TenNguoiNhan;
+            donhang.DiaChi = donDH.DiaChi;
+            donhang.NgayGiao = donDH.NgayGiao;
+            donhang.YeuCau = donDH.YeuCau;
+            db.Entry(donhang).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", "DonDatHang", new { @id = donDH.Id });
+        }
+
     }
 }

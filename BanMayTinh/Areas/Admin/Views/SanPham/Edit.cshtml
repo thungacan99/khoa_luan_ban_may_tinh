@@ -49,6 +49,86 @@
         .item-props {
             display: flex;
         }
+
+        .btn {
+            display: flex;
+            padding: 0%;
+            height: 50px;
+            margin-top: 2%;
+            margin-bottom: 2%
+        }
+
+            .btn .btn_huy {
+                background: #a4a4a4;
+                color: #fff;
+                padding: 0px 20px;
+                border: 2px solid #000000;
+                font-size: 16px;
+                margin-left: 67.5%;
+                margin-right: 0%;
+                border-radius: 4px;
+            }
+
+                .btn .btn_huy:hover {
+                    background-color: #dd513d;
+                }
+
+                .btn .btn_huy a {
+                    background: no-repeat;
+                    border: none;
+                    color: #fff;
+                    padding: 12px;
+                    font-size: 15px;
+                    text-align: center;
+                    border-radius: 3px;
+                    text-decoration: none;
+                }
+
+            .btn .btn_luu {
+                display: flex;
+                background: #2ca01c;
+                color: #fff;
+                padding: 10px 20px;
+                border: 2px solid #000000;
+                font-size: 15px;
+                margin-left: 2%;
+                border-radius: 4px;
+            }
+
+                .btn .btn_luu:hover {
+                    background-color: #a4a4a4;
+                }
+
+                .btn .btn_luu button {
+                    background: no-repeat;
+                    border: none
+                }
+
+
+        .anh {
+            display: flex;
+        }
+
+            .anh .anh_div {
+                border: 1px solid #a4a4a4;
+                margin: 10px;
+                border-radius: 4px;
+            }
+
+                .anh .anh_div:hover {
+                    border: 4px solid #47f9f7;
+                    margin: 7px;
+                }
+
+                .anh .anh_div .img {
+                    width: 150px;
+                    height: 150px;
+                }
+
+                    .anh.anh_div .img:focus {
+                        width: 200px;
+                        height: 200px;
+                    }
     </style>
 
     <script>
@@ -81,30 +161,48 @@
         }
     </script>
 
-    <div class="cart">
-        <div class="cart-header">
-            <div class="row">
-                <div class="clo-md-6">
-                    <h4 style="font-size:xx-large">Chỉnh Sửa Sản Phẩm </h4>
-                </div>
-                <div class="clo-md-6 text-right" style="padding-right: 150px">
-                    <a href="@Url.Action("Index", "LoaiSanPham")">Quay lại</a>
-                    <button class="btn-success" type="submit">Lưu</button>
-                </div>
+    @Html.HiddenFor(model => model.AnhSanPham)
+
+    <div>
+        <div>
+            <strong class="text-uppercase text-danger" style="font-size: x-large">@Model.TenSanPham</strong>
+        </div>
+        <div class="btn">
+            <div class="btn_huy">
+                <a href="@Url.Action("Index", "SanPham")">Hủy</a>
+            </div>
+            <div class="btn_luu">
+                <button class="button" type="submit">Lưu thay đổi</button>
             </div>
         </div>
+    </div>
+
+    <div class="anh">
+        @foreach (var item in Model.AnhSanPhams)
+        {
+            <div class="anh_div">
+                <img class="img" alt="@item.UR_Anh" src="/Content/images/AnhSanPham/@item.UR_Anh" />
+            </div>
+
+            @*<img class="etalage_source_image" style="width:50px;height:50px;" src="/Content/images/AnhSanPham/@item.UR_Anh" />*@
+        }
+    </div>
+
+    <div class="cart" style="margin-bottom: 10%">
+
+
+
         <div class="cart-body" style="padding-top: 30px; padding-right: 20px">
 
-
-            <div class="form-group">
-                <label class="label-item">
-                    Hình Ảnh
-                </label>
-                <form method="post" enctype="multipart/form-data"></form>
-                <div class="form-group">
-                    <input type="file" id="UL_anh" name="UL_anh" accept="image/*" />
-                </div>
-            </div>
+            @*<div class="form-group">
+                    <label class="label-item">
+                        Thêm Ảnh
+                    </label>
+                    <form method="post" enctype="multipart/form-data"></form>
+                    <div class="form-group">
+                        <input type="file" id="UL_anh" name="UL_anh" accept="image/*" />
+                    </div>
+                </div>*@
 
 
             <div class="form-group">
@@ -217,12 +315,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
     </div>
 

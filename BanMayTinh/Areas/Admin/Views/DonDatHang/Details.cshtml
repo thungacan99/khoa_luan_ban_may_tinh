@@ -5,100 +5,235 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div>
-    @* <h4>Đơn hàng @Html.DisplayFor(model => model.Id)</h4>
-    <hr />
-    <dl class="dl-horizontal">
+<script>
+    function showChangeInfo() {
+        let popupInfo = document.querySelector(".info-dh-enter");
+        if (popupInfo) {
+            popupInfo.classList.remove("hide-item");
+        }
+        let popupInfoView = document.querySelector(".info-dh-view");
+        if (popupInfoView) {
+            popupInfoView.classList.add("hide-item");
+        }
+    }
 
-        <div class="attr-row">
-            <div class="attribute-name">Tên khách hàng</div>
-            <div class="attribute-value">@Html.DisplayFor(model => model.UserNameKH)</div>
-        </div>
+    function cancelInfo() {
+        let popupInfo = document.querySelector(".info-dh-enter");
+        if (popupInfo) {
+            popupInfo.classList.add("hide-item");
+        }
+        let popupInfoView = document.querySelector(".info-dh-view");
+        if (popupInfoView) {
+            popupInfoView.classList.remove("hide-item");
+        }
+    }
+</script>
+<style>
+    .hide-item {
+        display: none;
+    }
+    /*    .container-don-hang {
+        display: flex;
+    }*/
 
-        <div class="attr-row">
-            <div class="attribute-name">Số điện thoại người nhận</div>
-            <div class="attribute-value">@Html.DisplayFor(model => model.SoDienThoaiNguoiNhan)</div>
-        </div>
+    .nội-dung-giỏ-hàng {
+        margin-bottom: 20px;
+    }
 
-        <div class="attr-row">
-            <div class="attribute-name">Ngày Đặt</div>
-            <div class="attribute-value">@Html.DisplayFor(model => model.NgayDat)</div>
-        </div>
+    .right-info-dh {
+        border: 1px solid #c7c7c7;
+        margin-bottom: 20px;
+        padding: 12px;
+    }
 
-        <div class="attr-row">
-            <div class="attribute-name">Ngày Giao</div>
-            <div class="attribute-value">@Html.DisplayFor(model => model.NgayGiao)</div>
-        </div>
+    .right-info-dh2 {
+        margin-bottom: 20px;
+        padding: 12px;
+    }
 
-        <div class="attr-row">
-            <div class="attribute-name">Tên người nhận</div>
-            <div class="attribute-value">@Html.DisplayFor(model => model.TenNguoiNhan)</div>
-        </div>
+    .right-info-dh .item-info {
+        display: flex;
+        margin-bottom: 10px;
+    }
 
-        @if (Model.YeuCau != null && Model.YeuCau != "")
-        {
-            <div class="attr-row">
-                <div class="attribute-name">Yêu cầu</div>
-                <div class="attribute-value">@Html.DisplayFor(model => model.YeuCau)</div>
-            </div>
+
+        .right-info-dh .item-info .label-info {
+            font-weight: bold;
+            background-color: white !important;
         }
 
-        <br>
-        <h1>Danh sách sản phẩm</h1>
-        @{var dsSanPham = ViewBag.ListSanPham;}
-        @foreach (var sp in dsSanPham) {
-            <div class="attr-row">
-                <div class="attribute-name">Sản phẩm</div>
-                <div class="attribute-value">@sp.TenSanPham</div>
-            </div>
-            <div class="attr-row">
-                <div class="attribute-value">Mã: @sp.Id</div>
-                <div class="attribute-value">
-                    <div class="grid_img">
-                        <div class="css3"><img style="max-height: 150px; max-width: 150px "
-                            src="~/Content/images/AnhSanPham/@sp.AnhSanPham" alt="" /></div>
-                    </div>
-                </div>
-            </div>
+        .right-info-dh .item-info .value-info {
+            padding-left: 6px;
         }
-    </dl> *@
 
-    <div class="wrap">
+    .div-end {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .non-underline {
+        text-decoration: none !important;
+    }
+
+    .a-btn {
+        color: #fff;
+        cursor: pointer;
+        background-color: #2ca01c;
+        text-decoration: none !important;
+        padding: 12px;
+        border-radius: 4px;
+        margin-left: 12px;
+    }
+
+    .bg-cancel {
+        background-color: #b40d0d !important;
+    }
+
+    .a-btn:hover {
+        color: #fff;
+    }
+
+ 
+</style>
+
+<div class="" style="padding-bottom: 0">
+    <div class="" style="padding: 0 20px 64px 12px;">
 
         <div class="tiêu-đề-giỏ-hàng">
-            <h4>CHI TIẾT ĐƠN ĐẶT HÀNG</h4>
+            <h4>QUẢN LÝ ĐƠN ĐẶT HÀNG</h4>
         </div>
 
-        <div class="tiếp-tục-mua-hàng" style="font-weight: bold;justify-content: normal;">
-            Trạng thái đơn hàng:
+        <div class="tiếp-tục-mua-hàng" style="justify-content: flex-end; padding-bottom: 18px;">
+            <div class="">
+                @if (Model.TrangThai == 1)
+                {
+                    <a class="a-btn" href="@Url.Action("CapNhatTTDonHang", "DonDatHang", new {@idDonHang = Model.Id, @trangThai = 2})">
+                        Chuyển sang đang giao hàng
+                    </a>
+                    <a class="a-btn bg-cancel" href="@Url.Action("CapNhatTTDonHang", "DonDatHang", new {@idDonHang = Model.Id, @trangThai = 6})">
+                        Hủy đơn
+                    </a>
+                }
+                else if (Model.TrangThai == 2)
+                {
+                    <a class="a-btn" href="@Url.Action("CapNhatTTDonHang", "DonDatHang", new {@idDonHang = Model.Id, @trangThai = 3})">
+                        Chuyển sang đã giao hàng
+                    </a>
+                    <a class="a-btn bg-cancel" href="@Url.Action("CapNhatTTDonHang", "DonDatHang", new {@idDonHang = Model.Id, @trangThai = 5})">
+                        Chuyển sang giao thất bại
+                    </a>
+                }
+                @*else if (Model.TrangThai == 3)
+                {
+                    <a class="a-btn" href="@Url.Action("CapNhatTTDonHang", "DonDatHang", new {@idDonHang = Model.Id, @trangThai = 4})">
+                        Chuyển sang giao thành công
+                    </a>
+                }*@
+            </div>
+        </div>
+
+        <div class="tiếp-tục-mua-hàng" style="font-weight: bold;justify-content: space-between;">
+            <div style="display: inline-flex;">
+                Trạng thái đơn hàng:
+                @if (Model.TrangThai == 1)
+                {
+                    <div style="padding-left: 8px; font-weight: normal; color: #FFAF02;">Chờ xác nhận</div>
+                }
+                else if (Model.TrangThai == 2)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đang giao hàng</div>
+                }
+                else if (Model.TrangThai == 3)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đã giao hàng</div>
+                }
+
+                else if (Model.TrangThai == 4)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Giao thành công</div>
+                }
+
+                else if (Model.TrangThai == 5)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: red">Giao thất bại</div>
+                }
+                else if (Model.TrangThai == 6)
+                {
+                    <div style="padding-left: 8px; font-weight:normal; color: red">Đơn hủy</div>
+                }
+            </div>
+
 
             @if (Model.TrangThai == 1)
             {
-                <div style="padding-left: 8px; font-weight:normal; color: coral">Chờ xác nhận</div>
-            }
-            else if (Model.TrangThai == 2)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đang giao hàng</div>
-            }
-            else if (Model.TrangThai == 3)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Đã giao hàng</div>
-            }
-
-            else if (Model.TrangThai == 4)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: forestgreen">Giao thành công</div>
-            }
-
-            else if (Model.TrangThai == 5)
-            {
-                <div style="padding-left: 8px; font-weight:normal; color: red">Đơn hủy</div>
+                <div class="div-end" style="color: #0075c0; cursor: pointer;" onclick="showChangeInfo()">
+                    Đổi thông tin giao hàng
+                </div>
             }
         </div>
 
 
+        <div class="right-info-dh info-dh-enter hide-item">
+            <form action="@Url.Action("ChinhSuaTTDonHang", "DonDatHang")" method="post">
+                <div class="">
 
-        <div class="right-info-dh">
+                    <input type="hidden" name="NgayDat" id="buyer_name" value="@System.DateTime.Now">
+                    <input type="hidden" name="Id" id="buyer_mobile" value="@Model.Id">
+                    <input type="hidden" name="TrangThai" id="buyer_mobile" value="@Model.TrangThai">
+
+                    <div class="new-cart-bottom">
+                        <div class="c3_col_1">
+                            <div class="c3_box user_info">
+                                <div class="user_info-item">
+                                    <span class="txt2">Họ tên*</span>
+                                    <input type="text" name="TenNguoiNhan" id="buyer_name" value="@Model.TenNguoiNhan">
+                                </div>
+
+                                <div class="user_info-item">
+                                    <span class="txt2">Số điện thoại*</span>
+                                    <input type="text" name="SoDienThoaiNguoiNhan" id="buyer_mobile" value="@Model.SoDienThoaiNguoiNhan">
+
+                                </div>
+
+                                <div class="user_info-item">
+                                    <span class="txt2">Ngày giao</span>
+                                    <input type="date" name="NgayGiao" id="buyer_email" value="@Model.NgayGiao.ToString("yyyy-MM-dd")">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="c3_col_1">
+                            <div class="c3_box user_info">
+                                <div class="user_info-item">
+                                    <span class="txt2">Địa chỉ*</span>
+                                    <input type="text" name="DiaChi" id="buyer_address" value="@Model.DiaChi">
+                                </div>
+                                <div class="user_info-item">
+                                    <span class="">Ghi chú</span>
+                                    <input type="text" name="YeuCau" id="buyer_note" value="@Model.YeuCau">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hoàn-tất-đơn-hàng" style="display:flex;">
+                    <div class="tiếp-tục-thanh-toán">
+                        <a href="@Url.Action("Details", "DonDatHang", new {@id = Model.Id})" onclick="cancelInfo()" class="a-btn" style="background:#000; padding: 10px 22px;">Hủy</a>
+                        <button class="btn-xac-nhan-dat-hang" style="cursor: pointer; background-color: black; border-radius: 4px; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 6px; width: 80px; margin-left: 50px; ">Lưu</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="right-info-dh info-dh-view">
             <div style="display:flex">
                 <div class="item-info" style="width: 98%;">
                     <div class="label-info">Tên người nhận: </div>
@@ -128,13 +263,13 @@
                 <div class="một-sản-phẩm">
 
                     <div class="ảnh-sản-phẩm-giỏ-hàng">
-                        <a href="/man-hinh-viewsonic-vp2458">
+                        <a href="@Url.Action("Detail", "Product", new { id = ct.SanPham.Id })">
                             <img class="cart-product-img" src="~/Content/images/AnhSanPham/@ct.SanPham.AnhSanPham">
                         </a>
                     </div>
 
                     <div class="new-cart-items-info" style="width:calc(100% - 200px);">
-                        <a href="/man-hinh-viewsonic-vp2458" class="new-cart-items-name">
+                        <a href="@Url.Action("Detail", "Product", new { id = ct.SanPham.Id })" class="new-cart-items-name">
                             @ct.SanPham.TenSanPham
 
                         </a>
@@ -180,7 +315,8 @@
     </div>
     <div class="clearfix"></div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@*<p>
+    @Html.ActionLink("Cập nhật trạng thái", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Trở về", "Index")
+</p>*@

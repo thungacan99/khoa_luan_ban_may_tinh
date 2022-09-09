@@ -62,6 +62,7 @@
 
         .right-info-dh .item-info .label-info {
             font-weight: bold;
+            background-color: white !important;
         }
 
         .right-info-dh .item-info .value-info {
@@ -72,6 +73,31 @@
         display: flex;
         justify-content: flex-end;
     }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .non-underline {
+        text-decoration: none !important;
+    }
+
+    .a-btn {
+        color: #fff;
+        cursor: pointer;
+        background-color: #2ca01c;
+        text-decoration: none !important;
+        padding: 12px;
+        border-radius: 4px;
+        margin-left: 12px;
+    }
+
+    .bg-cancel {
+        background-color: #b40d0d !important;
+    }
+
+    .a-btn:hover {
+        color: #fff;
     }
 </style>
 
@@ -82,8 +108,8 @@
             <h4>CHI TIẾT ĐƠN ĐẶT HÀNG</h4>
         </div>
 
-        <div class="tiếp-tục-mua-hàng" style="font-weight: bold;justify-content: normal;">
-            <div style="width: 100%; display: inline-flex;">
+        <div class="tiếp-tục-mua-hàng" style="font-weight: bold;justify-content: space-between;">
+            <div style="display: inline-flex;">
                 Trạng thái đơn hàng:
                 @if (Model.TrangThai == 1)
                 {
@@ -115,9 +141,19 @@
 
             @if (Model.TrangThai == 1)
             {
-                <div class="" style="width: 210px; color: #FFAF02;cursor:pointer;" onclick="showChangeInfo()">
-                    Đổi thông tin giao hàng
+                <div class="div-end">
+                    <div style="color: #0075c0; cursor: pointer; margin-right: 10px" onclick="showChangeInfo()">
+                        Đổi thông tin giao hàng
+                    </div>
+                    <a style="color: #b10e0e" href="@Url.Action("CapNhatTTDonHang", "Cart", new {@idDonHang = Model.Id, @trangThai = 6})">
+                        Hủy đơn hàng
+                    </a>
                 </div>
+                @*<div class="div-end">
+                    <a class="a-btn" style="background-color: #b10e0e" href="@Url.Action("CapNhatTTDonHang", "Cart", new {@idDonHang = Model.Id, @trangThai = 6})">
+                        Hủy đơn hàng
+                    </a>
+                </div>*@
             }
         </div>
 
@@ -148,7 +184,7 @@
 
                                 <div class="user_info-item">
                                     <span class="txt2">Ngày giao</span>
-                                    <input type="date" name="NgayGiao" id="buyer_email" value="@Model.NgayGiao">
+                                    <input type="date" name="NgayGiao" id="buyer_email" value="@Model.NgayGiao.ToString("yyyy-MM-dd")">
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -171,7 +207,7 @@
 
                 <div class="hoàn-tất-đơn-hàng" style="display:flex;">
                     <div class="tiếp-tục-thanh-toán">
-                        <div onclick="cancelInfo()" class="btn-xac-nhan-dat-hang" style="cursor:pointer; background-color: black; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 10px; width:100px; margin-left:500px;">Quay lại</div>
+                        <div onclick="cancelInfo()" class="btn-xac-nhan-dat-hang" style="cursor:pointer; background-color: black; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 10px; width:60px; margin-left:480px;">Hủy</div>
                     </div>
                     <div class="tiếp-tục-thanh-toán">
                         <button class="btn-xac-nhan-dat-hang" style="cursor: pointer; background-color: black; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 6px; width: 80px; margin-left: 50px; ">Lưu</button>
@@ -212,19 +248,18 @@
                 <div class="một-sản-phẩm">
 
                     <div class="ảnh-sản-phẩm-giỏ-hàng">
-                        <a href="/man-hinh-viewsonic-vp2458">
+                        <a href="@Url.Action("Detail", "Product", new { id = ct.SanPham.Id })">
                             <img class="cart-product-img" src="~/Content/images/AnhSanPham/@ct.SanPham.AnhSanPham">
                         </a>
                     </div>
 
                     <div class="new-cart-items-info" style="width:calc(100% - 200px);">
-                        <a href="/man-hinh-viewsonic-vp2458" class="new-cart-items-name">
+                        <a href="@Url.Action("Detail", "Product", new { id = ct.SanPham.Id })" class="new-cart-items-name">
                             @ct.SanPham.TenSanPham
 
                         </a>
                         <div style="display:flex;">
                             <div class="new-cart-items-desc" style="width:75%;">
-                                <p class="m-0"> <b>Mã sản phẩm: </b>@ct.SanPham.Id</p>
                                 <p class="m-0"> <b>Mã sản phẩm: </b>@ct.SanPham.Id</p>
                                 <p class="m-0"> <b>Loại sản phẩm: </b>@ct.SanPham.LoaiSanPham.TenLoaiSanPham</p>
                             </div>
@@ -252,7 +287,7 @@
                 @if (!String.IsNullOrEmpty(@Model.YeuCau))
                 {
                     <div class="item-info div-end">
-                        <div class="label-info">Ghi chú:</div>
+                        <div class="label-info" style="color: red">Ghi chú:</div>
                         <div class="value-info">@Model.YeuCau</div>
                     </div>
                 }
@@ -260,10 +295,27 @@
                     Tổng tiền đơn hàng :
                     <strong><span id="total_value" class="total-cart-price"> @tongTien.ToString("N0") VNĐ<u></u></span></strong>
                 </div>
+                @if (Model.TrangThai == 3)
+                {
+                    @*<form action="@Url.Action("CapNhatTTDonHang", "Cart", new {@idDonHang = Model.Id, @trangThai = 4})" method="post">
+                            <div class="item-info div-end">
+                                <button class="btn-xac-nhan-dat-hang" style="border-radius: 5px; cursor: pointer; background-color: #f66609; font-weight: bold; font-size: 16px; text-align: center; color: white; padding: 6px; width: 250px; margin-left: 50px; ">Xác nhận đã nhận hàng</button>
+                            </div>
+
+                            <a class="a-btn" href="@Url.Action("CapNhatTTDonHang", "Cart", new {@idDonHang = Model.Id, @trangThai = 4})">
+                                Chuyển sang đang giao hàng
+                            </a>
+
+                        </form>*@
+                    <div class="div-end">
+                        <a class="a-btn" href="@Url.Action("CapNhatTTDonHang", "Cart", new {@idDonHang = Model.Id, @trangThai = 4})">
+                            Xác nhận đã nhận hàng
+                        </a>
+                    </div>
+                }
+
             </div>
         </div>
     </div>
     <div class="clearfix"></div>
 </div>
-</div>
-

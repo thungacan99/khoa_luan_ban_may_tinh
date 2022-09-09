@@ -29,17 +29,13 @@ else
             </div>
 
             <div class="tiếp-tục-mua-hàng">
-
                 <div class="nút-tiếp-tục">
                     <a href="@Url.Action("Index", "Home")" class="tiep-tuc-mua-hang-cart">Tiếp tục mua hàng</a>
                 </div>
-
                 <div class="nút-xóa">
                     <a href="@Url.Action("XoaGioHang")" class="xóa-giỏ-hàng-cart">Xóa giỏ hàng</a>
                 </div>
-
                 <div class="clearfix">
-
                 </div>
             </div>
 
@@ -57,13 +53,13 @@ else
                     <div class="một-sản-phẩm">
 
                         <div class="ảnh-sản-phẩm-giỏ-hàng">
-                            <a href="/man-hinh-viewsonic-vp2458">
+                            <a href="@Url.Action("Detail", "Product", new { id = ct.SanPham.Id })">
                                 <img class="cart-product-img" src="~/Content/images/AnhSanPham/@ct.SanPham.AnhSanPham">
                             </a>
                         </div>
 
                         <div class="new-cart-items-info">
-                            <a href="/man-hinh-viewsonic-vp2458" class="new-cart-items-name">
+                            <a href="@Url.Action("Detail", "Product", new { id = ct.SanPham.Id })" class="new-cart-items-name">
                                 @ct.SanPham.TenSanPham
 
                             </a>

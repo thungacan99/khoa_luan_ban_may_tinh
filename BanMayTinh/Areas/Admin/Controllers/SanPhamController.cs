@@ -21,22 +21,33 @@ namespace BanMayTinh.Areas.Admin.Controllers
         {
             ProductsModel products = new ProductsModel();
             products.danhSach = db.SanPhams.ToList();
-            return View(products);
+            ViewBag.products = products.danhSach;
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
+            {
+                return View(products);
+            }
+            return RedirectToAction("Login", "Admin");
         }
 
         // GET: Admin/SanPham/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             SanPham sanPham = db.SanPhams.Find(id);
-            if (sanPham == null)
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                if (sanPham == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sanPham);
             }
-            return View(sanPham);
+            return RedirectToAction("Login", "Admin");
         }
 
         // GET: Admin/SanPham/Create
@@ -52,26 +63,30 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = 
+        public ActionResult Create([Bind(Include =
             "Id,TenSanPham,Id_HangSanXuat,Id_LoaiSanPham,ThuocTinh1," +
-            "ThuocTinh2,ThuocTinh3,ThuocTinh4,ThuocTinh5,DonGia")] SanPham sanPham)
+            "ThuocTinh2,ThuocTinh3,ThuocTinh4,ThuocTinh5,DonGia,SoLuong")] SanPham sanPham)
         {
-            HttpPostedFileBase UL_anh = Request.Files["UL_anh"];
-            string fname = UL_anh.FileName;
-            int id = sanPham.Id;
-            string ur = Path.Combine(Server.MapPath("~/Content/images/AnhSanPham/"), fname);
-            UL_anh.SaveAs(ur);
+            for (int i = 1; i <= 5; i++)
+            {
+                var fileIndex = "UL_anh" + i;
+                HttpPostedFileBase UL_anh = Request.Files[fileIndex];
 
-            //SanPham sp = db.SanPhams.FirstOrDefault(x => x.Id == id);
-            //SanPham sp = new SanPham();
-            //sp.AnhSanPham = fname;
-            //sp.Id = new Random().Next(100, 99999);
+                if (UL_anh != null && UL_anh.ContentLength != 0)
+                {
+                    string fname = Guid.NewGuid() + UL_anh.FileName;
+                    int id = sanPham.Id;
+                    string ur = Path.Combine(Server.MapPath("~/Content/images/AnhSanPham/"), fname);
+                    UL_anh.SaveAs(ur);
 
-            sanPham.AnhSanPham = fname;
-            AnhSanPham img = new AnhSanPham();
-            img.Id_SanPham = id;
-            img.UR_Anh = fname;
-            db.AnhSanPhams.Add(img);
+                    sanPham.AnhSanPham = fname;
+                    AnhSanPham img = new AnhSanPham();
+                    img.Id_SanPham = id;
+                    img.UR_Anh = fname;
+                    db.AnhSanPhams.Add(img);
+                }
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -88,18 +103,23 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // GET: Admin/SanPham/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+            if (dangnhap != null && dangnhap.Quyen == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                SanPham sanPham = db.SanPhams.Find(id);
+                if (sanPham == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Id_HangSanXuat = new SelectList(db.HangSanXuats, "Id", "TenHang", sanPham.Id_HangSanXuat);
+                ViewBag.Id_LoaiSanPham = new SelectList(db.LoaiSanPhams, "Id", "TenLoaiSanPham", sanPham.Id_LoaiSanPham);
+                return View(sanPham);
             }
-            SanPham sanPham = db.SanPhams.Find(id);
-            if (sanPham == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Id_HangSanXuat = new SelectList(db.HangSanXuats, "Id", "TenHang", sanPham.Id_HangSanXuat);
-            ViewBag.Id_LoaiSanPham = new SelectList(db.LoaiSanPhams, "Id", "TenLoaiSanPham", sanPham.Id_LoaiSanPham);
-            return View(sanPham);
+            return RedirectToAction("Login", "Admin");
         }
 
         // POST: Admin/SanPham/Edit/5
@@ -107,13 +127,13 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TenSanPham,AnhSanPham,Id_HangSanXuat,Id_LoaiSanPham,ThuocTinh1,ThuocTinh2,ThuocTinh3,ThuocTinh4,ThuocTinh5,DonGia")] SanPham sanPham)
+        public ActionResult Edit([Bind(Include = "Id,TenSanPham,AnhSanPham,Id_HangSanXuat,Id_LoaiSanPham,ThuocTinh1,ThuocTinh2,ThuocTinh3,ThuocTinh4,ThuocTinh5,DonGia,SoLuong")] SanPham sanPham)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(sanPham).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "SanPham", new { id = sanPham.Id });
             }
             ViewBag.Id_HangSanXuat = new SelectList(db.HangSanXuats, "Id", "TenHang", sanPham.Id_HangSanXuat);
             ViewBag.Id_LoaiSanPham = new SelectList(db.LoaiSanPhams, "Id", "TenLoaiSanPham", sanPham.Id_LoaiSanPham);
@@ -123,16 +143,52 @@ namespace BanMayTinh.Areas.Admin.Controllers
         // GET: Admin/SanPham/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            //trường hợp không có chi tiết đơn hàng nào có sản phẩm này
+
+            var donHangs = db.ChiTietDonDatHangs.Where(x => x.Id_SanPhamMua == id).ToList();
+            if (donHangs.Count == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // 1. xóa hết sản phẩm trong giỏ hàng đi nếu tồn tại
+                var chiTietGH = db.ChiTietGioHangs.Where(x => x.Id_SanPham == id).ToList();
+
+                if (chiTietGH.Count > 0)
+                {
+                    db.ChiTietGioHangs.RemoveRange(chiTietGH);
+                }
+
+                // tìm ảnh sản phẩm và xóa đi
+
+                var anhSP = db.AnhSanPhams.Where(x => x.Id_SanPham == id).ToList();
+                if (anhSP.Count > 0)
+                {
+                    db.AnhSanPhams.RemoveRange(anhSP);
+                }
+
+                // thực hiện xóa sản phẩm đi
+                var sanPham = db.SanPhams.Where(x => x.Id == id).FirstOrDefault();
+                db.SanPhams.Remove(sanPham);
+
+                db.SaveChanges();
             }
-            SanPham sanPham = db.SanPhams.Find(id);
-            if (sanPham == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sanPham);
+
+            return RedirectToAction("Index", "SanPham");
+
+            //trường hợp đã có chi tiết đơn hàng có sp này
+            //không cho phép xóa
+
+
+
+
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //SanPham sanPham = db.SanPhams.Find(id);
+            //if (sanPham == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(sanPham);
         }
 
         // POST: Admin/SanPham/Delete/5

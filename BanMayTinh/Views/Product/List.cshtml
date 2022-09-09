@@ -209,9 +209,11 @@
                 <div class="clear"></div>
             </div>
             <div class="box1">
+                @{ double dgsp = 0;}
                 @foreach (BanMayTinh.Models.DB.SanPham item in Model)
                 {
                     <div class="col_1_of_single1 span_1_of_single1" style="margin-left: 0px;margin-right: 30px; width: 30%">
+                        <input type="hidden" value="@{ dgsp = item.DonGia != null ? (double) item.DonGia : 0;}" />
                         <div class="view1 view-fifth1">
                             <div class="top_box">
 
@@ -223,7 +225,7 @@
                                         <a href="@Url.Action("Detail", "Product", new { id = item.Id })" class=" info">Xem chi tiết</a>
                                     </div>
                                 </div>
-                                <div class="price">@item.DonGia VNĐ</div>
+                                <div class="price">@dgsp.ToString("N0") VNĐ</div>
 
                             </div>
 

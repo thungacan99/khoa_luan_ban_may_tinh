@@ -81,7 +81,6 @@
                         @foreach (BanMayTinh.Models.DB.AnhSanPham item in listanh)
                         {
                             <li>
-
                                 <img class="etalage_thumb_image " style="width:50px;height:50px;" src="/Content/images/AnhSanPham/@item.UR_Anh" />
                                 <img class="etalage_source_image" style="width:50px;height:50px;" src="/Content/images/AnhSanPham/@item.UR_Anh" />
                             </li>
@@ -110,73 +109,74 @@
                     <ul class="add-to-links">
                         <li><img src="~/Content/images/wish.png" alt="" /><a href="#">Thêm vào danh sách yêu thích</a></li>
                     </ul>
-                    <p class="m_desc">Tặng balo,chuột và lót chuột bo viền</p>
-                    <p class="m_desc">Khuyến mãi 100k cho học sinh,sinh viên</p>
-                    <p class="m_desc">Giảm 100k khi thanh toán bằng tài khoản ngân hàng</p>
+                    <div class="toogle" style="margin-top: 40px">
+                        <h3 class="m_3" style="color: #ff0000">Cấu hình chi tiết</h3>
+                        @if (Model.LoaiSanPham.TenLoaiSanPham != null && Model.TenSanPham != null)
+                        {
+                            <p class="m_text">@Model.LoaiSanPham.TenLoaiSanPham : @Model.TenSanPham </p>
+                        }
 
-                    <div class="social_single">
-                        <ul>
-                            <li class="fb"><a href="#"><span> </span></a></li>
-                            <li class="tw"><a href="#"><span> </span></a></li>
-                            <li class="g_plus"><a href="#"><span> </span></a></li>
-                            <li class="rss"><a href="#"><span> </span></a></li>
-                        </ul>
+                        @if (Model.LoaiSanPham.ThuocTinh1 != null && Model.ThuocTinh1 != null)
+                        {
+                            <p class="m_text">@Model.LoaiSanPham.ThuocTinh1 : @Model.ThuocTinh1 </p>
+                        }
+
+                        @if (Model.LoaiSanPham.ThuocTinh2 != null && Model.ThuocTinh2 != null)
+                        {
+                            <p class="m_text">@Model.LoaiSanPham.ThuocTinh2 : @Model.ThuocTinh2 </p>
+                        }
+
+                        @if (Model.LoaiSanPham.ThuocTinh3 != null && Model.ThuocTinh3 != null)
+                        {
+                            <p class="m_text">@Model.LoaiSanPham.ThuocTinh3 : @Model.ThuocTinh3 </p>
+                        }
+
+                        @if (Model.LoaiSanPham.ThuocTinh4 != null && Model.ThuocTinh4 != null)
+                        {
+                            <p class="m_text">@Model.LoaiSanPham.ThuocTinh4 : @Model.ThuocTinh4 </p>
+                        }
+                        @if (Model.LoaiSanPham.ThuocTinh5 != null && Model.ThuocTinh5 != null)
+                        {
+                            <p class="m_text">@Model.LoaiSanPham.ThuocTinh5 : @Model.ThuocTinh5 </p>
+                        }
+
                     </div>
-                    <div class="toogle">
+
+                    <div class="toogle" style="margin-top: 40px">
                         <h3 class="m_3">Đánh giá sản phẩm</h3>
-                        <p class="m_text">Sức mạnh đáng nể trong thân máy gọn ghẽ</p>
-                        <p class="m_text">Kiểu dáng trẻ trung thanh lịch và năng động</p>
-                        <p class="m_text">Đem lại trải nghiệm âm thanh chuyên nghiệp</p>
+                        <p class="m_text">Cấu hình mạnh mẽ, đem lại trải nghiệp giao diện và âm thanh chuyên nghiệp</p>
+                        <p class="m_text">Kiểu dáng trẻ trung thanh lịch và năng động, tinh tế đến từng góc máy</p>
                         <p class="m_text">Tạm biệt mật khẩu rườm rà</p>
                         <p class="m_text">Mở ra khả năng tương tác linh hoạt</p>
-                        <p class="m_text">Tinh tế đến từng góc máy</p>
                     </div>
                 </div>
             }
             <div class="clear"></div>
-
-            <div class="toogle">
-                <h3 class="m_3">Cấu hình chi tiết</h3>
-                @if (Model.LoaiSanPham.TenLoaiSanPham != null && Model.TenSanPham != null)
-                {
-                    <p class="m_text">@Model.LoaiSanPham.TenLoaiSanPham : @Model.TenSanPham </p>
-                }
-
-                @if (Model.LoaiSanPham.ThuocTinh1 != null && Model.ThuocTinh1 != null)
-                {
-                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh1 : @Model.ThuocTinh1 </p>
-                }
-
-                @if (Model.LoaiSanPham.ThuocTinh2 != null && Model.ThuocTinh2 != null)
-                {
-                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh2 : @Model.ThuocTinh2 </p>
-                }
-
-                @if (Model.LoaiSanPham.ThuocTinh3 != null && Model.ThuocTinh3 != null)
-                {
-                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh3 : @Model.ThuocTinh3 </p>
-                }
-
-                @if (Model.LoaiSanPham.ThuocTinh4 != null && Model.ThuocTinh4 != null)
-                {
-                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh4 : @Model.ThuocTinh4 </p>
-                }
-                @if (Model.LoaiSanPham.ThuocTinh5 != null && Model.ThuocTinh5 != null)
-                {
-                    <p class="m_text">@Model.LoaiSanPham.ThuocTinh5 : @Model.ThuocTinh5 </p>
-                }
-
+            <div class="social_single">
+                <ul>
+                    <li class="fb"><a href="https://www.facebook.com"><span> </span></a></li>
+                    <li class="tw"><a href="https://twitter.com/"><span> </span></a></li>
+                    <li class="g_plus"><a href="#"><span> </span></a></li>
+                    <li class="rss"><a href="#"><span> </span></a></li>
+                </ul>
             </div>
+            <div class="toggle">
+                <p class="m_desc">Tặng balo,chuột và lót chuột bo viền</p>
+                <p class="m_desc">Miễn phí vận chuyển cho đơn hàng từ 1 triệu đồng</p>
+                <p class="m_desc">Thời gian giao hàng linh hoạt</p>
+            </div>
+
+
             <br />
             <br />
             @*<h3>SẢN PHẨM TƯƠNG TỰ</h3>
-            <ul id="flexiselDemo3">
-                <li><img src="~/Content/images/laptop/laptop1.jpg" /><div class="grid-flex"><a href="#">LG</a><p>17.900</p></div></li>
-                <li><img src="~/Content/images/laptop/laptop6.jpg" /><div class="grid-flex"><a href="#">Lenovo</a><p>15.900</p></div></li>
-                <li><img src="~/Content/images/laptop/laptop3.jpg" /><div class="grid-flex"><a href="#">Asus</a><p>17.790</p></div></li>
-                <li><img src="~/Content/images/laptop/laptop4.png" /><div class="grid-flex"><a href="#">Acer</a><p>17.790</p></div></li>
-                <li><img src="~/Content/images/laptop/laptop5.jpg" /><div class="grid-flex"><a href="#">HP</a><p>16.690</p></div></li>
-            </ul>*@
+                <ul id="flexiselDemo3">
+                    <li><img src="~/Content/images/laptop/laptop1.jpg" /><div class="grid-flex"><a href="#">LG</a><p>17.900</p></div></li>
+                    <li><img src="~/Content/images/laptop/laptop6.jpg" /><div class="grid-flex"><a href="#">Lenovo</a><p>15.900</p></div></li>
+                    <li><img src="~/Content/images/laptop/laptop3.jpg" /><div class="grid-flex"><a href="#">Asus</a><p>17.790</p></div></li>
+                    <li><img src="~/Content/images/laptop/laptop4.png" /><div class="grid-flex"><a href="#">Acer</a><p>17.790</p></div></li>
+                    <li><img src="~/Content/images/laptop/laptop5.jpg" /><div class="grid-flex"><a href="#">HP</a><p>16.690</p></div></li>
+                </ul>*@
             <script type="text/javascript">
                 $(window).load(function () {
                     $("#flexiselDemo1").flexisel();

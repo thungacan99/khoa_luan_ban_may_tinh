@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model  BanMayTinh.Models.DB.TaiKhoan
+<div class="login">
+    <div class="wrap">
+        <div class="col_1_of_login span_1_of_login">
+            <h4 class="title">Tài khoản mới</h4>
+            <h5 class="sub_title">Đăng ký</h5>
+            <p>- Tên tài khoản từ 6 ký tự trở lên(*)</p>
+            <p>- Mật khẩu từ 6-25 ký tự bao gồm ít nhất 1 chữ hoa,1 chữ số và 1 ký tự đặc biệt(*)</p>
+            <div class="button1">
+                <a href="@Url.Action("Register","Admin")"><input type="submit" name="Submit" value="Tiếp tục"></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="col_1_of_login span_1_of_login">
+            <div class="login-title">
+                <h4 class="title">Đăng nhập</h4>
+                <div class="comments-area">
+                    <form method="post" action="@Url.Action("LogIn")">
+                        <p>
+                            <label>Tên tài khoản</label>
+                            <span>*</span>
+                            <input type="text" name="UserName" placeholder="UserName">
+                        </p>
+                        <p>
+                            <label>Mật khẩu</label>
+                            <span>*</span>
+                            <input type="password" name="Password" placeholder="Password">
+                        </p>
+                        <p id="login-form-remember">
+                            <label><a href="#">Quên mật khẩu ? </a></label>
+                        </p>
+                        <p>
+                            <input type="submit" value="Đăng nhập">
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+

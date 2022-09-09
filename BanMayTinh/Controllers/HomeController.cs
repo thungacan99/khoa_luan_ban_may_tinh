@@ -66,12 +66,13 @@ namespace BanMayTinh.Controllers
                                                         a.Password.Equals(taiKhoan.Password)).FirstOrDefault();
             if (result == null && ModelState.IsValid)
             {
-
                 TaiKhoan tkMoi = new TaiKhoan();
                 tkMoi.UserName = taiKhoan.UserName;
                 tkMoi.Password = taiKhoan.Password;
+                tkMoi.TenKhachHang = taiKhoan.TenKhachHang;
                 tkMoi.Email = taiKhoan.Email;
                 tkMoi.DiaChi = taiKhoan.DiaChi;
+                tkMoi.Quyen = 0;
 
                 dbContext.TaiKhoans.Add(tkMoi);
 
@@ -81,9 +82,7 @@ namespace BanMayTinh.Controllers
                 dbContext.SaveChanges();
 
 
-
-
-                Session["logIn"] = tkMoi;
+                Session["logIn"] = null;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -100,6 +99,11 @@ namespace BanMayTinh.Controllers
         }
 
         public ActionResult Single()
+        {
+            return View();
+        }
+
+        public ActionResult Laptop77()
         {
             return View();
         }

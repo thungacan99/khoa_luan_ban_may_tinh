@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "DoanhThu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<BanMayTinh.Models.DB.ChiTietDonDatHang>
+
+<style>
+    .hide-item {
+        display: none;
+    }
+    /*    .container-don-hang {
+        display: flex;
+    }*/
+
+    .nội-dung-giỏ-hàng {
+        margin-bottom: 20px;
+    }
+
+    .right-info-dh {
+        margin-top: 20px;
+        margin-bottom: 5%;
+        padding: 12px;
+    }
+
+    .right-info-dh2 {
+        margin-bottom: 20px;
+        padding: 12px;
+    }
+
+    .right-info-dh .item-info {
+        border: 1px solid #c7c7c7;
+        /*display: flex;*/
+        margin-bottom: 20px;
+        padding: 12px;
+    }
+
+        .right-info-dh .item-info div {
+            display: flex;
+            margin: 10px;
+        }
+
+
+        .right-info-dh .item-info .label-info {
+            width: 30%;
+            font-weight: bold;
+            background-color: white !important;
+        }
+
+            .right-info-dh .item-info .label-info:hover {
+                color: #cb0a0a
+            }
+
+        .right-info-dh .item-info .value-info {
+            padding-left: 6px;
+            color: #59b5ed
+        }
+
+            .right-info-dh .item-info .value-info:hover {
+                color: #1112a8
+            }
+
+    .div-end {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .non-underline {
+        text-decoration: none !important;
+    }
+
+    .a-btn {
+        color: #fff;
+        cursor: pointer;
+        background-color: #2ca01c;
+        text-decoration: none !important;
+        padding: 12px;
+        border-radius: 4px;
+        margin-left: 12px;
+    }
+
+    .bg-cancel {
+        background-color: #b40d0d !important;
+    }
+
+    .a-btn:hover {
+        color: #fff;
+    }
+</style>
+
+<strong class="text-uppercase text-danger" style="font-size: x-large">Quản lý doanh thu</strong>
+
+<form action="@Url.Action("DoanhThu", "DoanhThu")" method="post">
+    <div style="display: flex; margin-top: 3%">
+        <div style="margin: 10px">Từ ngày</div>
+        <input type="date" name="TuNgay" value="@ViewBag.tuNgay" />
+        <div style="margin: 10px">Đến ngày</div>
+        <input type="date" name="DenNgay" value="@ViewBag.denNgay" />
+        <button type="submit" style="margin-left: 20px">Tìm kiếm</button>
+    </div>
+</form>
+
+<div class="right-info-dh info-dh-view">
+    <div style="display:flex">
+        <div class="item-info" style="width: 45%;">
+            <div style="display: flex">
+                <div class="label-info" style="margin-top: 110px; margin-left: 15px">Tổng doanh thu: </div>
+                <div class="value-info" style="margin-top: 110px;">
+                    @ViewBag.doanhThuKhongHuy
+                    VNĐ
+                </div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info" style="margin-left: 15px; color: #f7b2b2">Thất bại: </div>
+                <div class="value-info" style="color: #f7b2b2">
+                    @ViewBag.doanhThuHuy
+                    VNĐ
+                </div>
+            </div>
+        </div>
+        <div class="item-info" style="width: 50%;">
+            <div style="display: flex">
+                <div class="label-info">Chờ xác nhận: </div>
+                <div class="value-info"> @ViewBag.doanhThuChoXacNhan VNĐ</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Đang giao hàng: </div>
+                <div class="value-info">@ViewBag.doanhThuDangGiaoHang VNĐ</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info" style="color: #f35252">Đã giao hàng: </div>
+                <div class="value-info">@ViewBag.doanhThuDaGiaoHang VNĐ</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info" style="color: #f35252">Giao thành công: </div>
+                <div class="value-info">@ViewBag.doanhThuGiaoThanhCong VNĐ</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Giao thất bại: </div>
+                <div class="value-info">@ViewBag.doanhThuGiaoThatBai VNĐ</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Đơn hủy: </div>
+                <div class="value-info">@ViewBag.doanhThuDonHuy VNĐ</div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

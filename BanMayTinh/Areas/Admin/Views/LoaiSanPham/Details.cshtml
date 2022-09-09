@@ -1,75 +1,110 @@
-﻿@model BanMayTinh.Models.DB.LoaiSanPham
+﻿@using BanMayTinh.Models.DB
+@model BanMayTinh.Models.DB.LoaiSanPham
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<style>
+    .tb {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 
-<div>
-    <h4>LoaiSanPham</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenLoaiSanPham)
-        </dt>
+        .tb .label-info {
+            border: 1px solid #c7c7c7;
+            padding: 12px;
+            width: 15%;
+            margin-left: 20%;
+            font-weight: bold;
+            background-color: #e5e8ec !important;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.TenLoaiSanPham)
-        </dd>
+            .tb .label-info:hover {
+                background-color: #dbf7f1 !important;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh1)
-        </dt>
+        .tb .value-info {
+            width: 40%;
+            border: 1px solid #c7c7c7;
+            padding: 12px;
+            color: #000000
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh1)
-        </dd>
+            .tb .value-info:hover {
+                background-color: #dbf7f1 !important;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh2)
-        </dt>
+    .btn_huy {
+        background: #2ca01c;
+        display: block;
+        color: #fff;
+        padding: 10px 20px;
+        border: 2px solid #000000;
+        font-size: 16px;
+        margin-left: 80%;
+        margin-right: 8%;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh2)
-        </dd>
+        .btn_huy:hover {
+            background: #a4a4a4;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh3)
-        </dt>
+        .btn_huy a {
+            color: #fff;
+            padding: 12px;
+            font-size: 15px;
+            text-align: center;
+            margin: 0 0 30px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+</style>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh3)
-        </dd>
+<div class="" style="padding-bottom: 0">
+    <div class="" style="padding: 0 20px 64px 12px;">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh4)
-        </dt>
+        <div class="tiêu-đề-giỏ-hàng">
+            <h4>QUẢN LÝ LOẠI SẢN PHẨM</h4>
+        </div>
+        <div class="btn_luu">
+            <div class="btn_huy">
+                <a href="@Url.Action("Edit", "LoaiSanPham", new { id = Model.Id })">Chỉnh sửa</a>
+            </div>
+        </div>
+        <div class="tb">
+            <div style="display: flex">
+                <div class="label-info">Loại sản phẩm: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.TenLoaiSanPham)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 1: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh1)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 2: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh2)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 3: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh3)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 4: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh4)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Thuộc tính 5: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.ThuocTinh5)</div>
+            </div>
+            <div style="display: flex">
+                <div class="label-info">Danh mục: </div>
+                <div class="value-info">@Html.DisplayFor(model => model.Id_DanhMuc)</div>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh4)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThuocTinh5)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThuocTinh5)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_DanhMuc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id_DanhMuc)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

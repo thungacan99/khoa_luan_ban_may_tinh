@@ -1,4 +1,12 @@
 ﻿<!DOCTYPE HTML>
+@using BanMayTinh.Models;
+@using System.Collections.Generic;
+@using System.Web.Mvc;
+@using System.Linq;
+@using System.Data.Entity;
+@using BanMayTinh.Models.DB;
+@using System.Web;
+@using System;
 <html>
 <head>
     <title>Máy tính xách tay | Laptop77</title>
@@ -90,23 +98,32 @@
 </head>
 <body>
 
-
     <div class="header-top">
         <div class="wrap">
             <div class="logo">
-                <a href="/Home/Index"><img src="~/Content/images/laptop/logo.png" alt="" /></a>
+                <a href="@Url.Action("Index", "Home")"><img src="~/Content/images/laptop/logo.png" alt="" /></a>
             </div>
             <div class="cssmenu">
                 <ul>
                     @*@if (Session["LogIn"] != null)
-        {
-            <li><a href="@Url.Action("GioHang", "Cart")">Giỏ hàng</a></li>
+                        {
+                            <li><a href="@Url.Action("GioHang", "Cart")">Giỏ hàng</a></li>
 
-        }
-        else
-        {
-            <li><a href="/Product/Shop">Cửa hàng</a></li>
-        }*@
+                        }
+                        else
+                        {
+                            <li><a href="/Product/Shop">Cửa hàng</a></li>
+                        }*@
+                    @{
+                        DBContext dbContext = new DBContext();
+                        TaiKhoan dangnhap = (TaiKhoan)Session["LogIn"];
+                        if (dangnhap != null && dangnhap.Quyen == 1)
+                        {
+                            <li class="active"><a href="@Url.Action("Index", "Admin")">Quản lý cửa hàng</a></li>
+                        }
+                    }
+
+
                     <li><a href="@Url.Action("GioHang", "Cart")">Giỏ hàng</a></li>
                     <li><a href="@Url.Action("DSDonHang", "DonHang")">Đơn Hàng</a></li>
                     @if (Session["LogIn"] != null)
@@ -146,7 +163,7 @@
                 </li>
 
                 @*<li><a class="color10" href="#">Cơ sở bán hàng </a></li>
-                <li><a class="color11" href="#">Liên hệ</a></li>*@
+                    <li><a class="color11" href="#">Liên hệ</a></li>*@
 
             </ul>
             <div class="clear"></div>
@@ -179,94 +196,120 @@
             </div>
         </div>
         @*<div class="footer-middle">
-            <div class="wrap">
-                <div class="section group">
-                    <div class="col_1_of_middle span_1_of_middle">
-                        <dl id="sample" class="dropdown">
-                            <dt><a><span>Chọn quốc gia của bạn</span></a></dt>
-                            <dd>
-                                <ul>
-                                    <li><a>Australia<img class="flag" src="~/Content/images/as.png" alt="" /><span class="value">AS</span></a></li>
-                                    <li><a>Sri Lanka<img class="flag" src="~/Content/images/srl.png" alt="" /><span class="value">SL</span></a></li>
-                                    <li><a>Newziland<img class="flag" src="~/Content/images/nz.png" alt="" /><span class="value">NZ</span></a></li>
-                                    <li><a>Pakistan<img class="flag" src="~/Content/images/pk.png" alt="" /><span class="value">Pk</span></a></li>
-                                    <li><a>United Kingdom<img class="flag" src="~/Content/images/uk.png" alt="" /><span class="value">UK</span></a></li>
-                                    <li><a>United States<img class="flag" src="~/Content/images/us.png" alt="" /><span class="value">US</span></a></li>
-                                </ul>
-                            </dd>
-                        </dl>
+                <div class="wrap">
+                    <div class="section group">
+                        <div class="col_1_of_middle span_1_of_middle">
+                            <dl id="sample" class="dropdown">
+                                <dt><a><span>Chọn quốc gia của bạn</span></a></dt>
+                                <dd>
+                                    <ul>
+                                        <li><a>Australia<img class="flag" src="~/Content/images/as.png" alt="" /><span class="value">AS</span></a></li>
+                                        <li><a>Sri Lanka<img class="flag" src="~/Content/images/srl.png" alt="" /><span class="value">SL</span></a></li>
+                                        <li><a>Newziland<img class="flag" src="~/Content/images/nz.png" alt="" /><span class="value">NZ</span></a></li>
+                                        <li><a>Pakistan<img class="flag" src="~/Content/images/pk.png" alt="" /><span class="value">Pk</span></a></li>
+                                        <li><a>United Kingdom<img class="flag" src="~/Content/images/uk.png" alt="" /><span class="value">UK</span></a></li>
+                                        <li><a>United States<img class="flag" src="~/Content/images/us.png" alt="" /><span class="value">US</span></a></li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col_1_of_middle span_1_of_middle">
+                            <ul class="f_list1">
+                                <li>
+                                    <span class="m_8">Đăng ký và nhận khuyến mãi 15%</span>
+                                    <div class="search">
+                                        <input type="text" name="s" class="textbox" value="Tìm Kiếm" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Tìm Kiếm';}">
+                                        <input type="submit" value="Subscribe" id="submit" name="submit">
+                                        <div id="response"> </div>
+                                    </div><div class="clear"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
                     </div>
-                    <div class="col_1_of_middle span_1_of_middle">
-                        <ul class="f_list1">
-                            <li>
-                                <span class="m_8">Đăng ký và nhận khuyến mãi 15%</span>
-                                <div class="search">
-                                    <input type="text" name="s" class="textbox" value="Tìm Kiếm" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Tìm Kiếm';}">
-                                    <input type="submit" value="Subscribe" id="submit" name="submit">
-                                    <div id="response"> </div>
-                                </div><div class="clear"></div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="clear"></div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
         <div class="footer-bottom">
             <div class="wrap">
                 <div class="section group">
                     <div class="col_1_of_5 span_1_of_5">
                         <h3 class="m_9">Máy Tính Theo Nhu Cầu</h3>
-
                         <ul class="sub_list">
-
-                            <li><a href="shop.html">Máy Tính Văn Phòng</a></li>
-                            <li><a href="shop.html">Máy Tính Chơi Game</a></li>
-                            <li><a href="shop.html">Máy Chủ</a></li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 1, loaisanphamId = 9})" style="color: #555;">
+                                    Máy Tính Văn Phòng
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 1, loaisanphamId = 10})" style="color: #555;">
+                                    Máy Tính Chơi game
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 1, loaisanphamId = 14})" style="color: #555;">
+                                    Laptop
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col_1_of_5 span_1_of_5">
                         <h3 class="m_9">Linh kiện</h3>
                         <ul class="list1">
-                            <li><a href="shop.html">CPU-Bộ vi xử lý</a></li>
-                            <li><a href="shop.html">RAM</a></li>
-                            <li><a href="shop.html">VGA - Card đồ họa</a></li>
-                            <li><a href="shop.html">Ổ cứng</a></li>
-                            <li><a href="shop.html">Nguồn</a></li>
-                            <li><a href="shop.html">Tất cả linh kiện</a></li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 2, loaisanphamId = 1})" style="color: #555;">
+                                    CPU-Bộ Vi Xử Lý
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 2, loaisanphamId = 2})" style="color: #555;">
+                                    RAM
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 2, loaisanphamId = 3})" style="color: #555;">
+                                    Ổ cứng HDD
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 2, loaisanphamId = 4})" style="color: #555;">
+                                    Ổ cứng SSD
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
                     <div class="col_1_of_5 span_1_of_5">
                         <h3 class="m_9">Màn hình</h3>
                         <ul class="list1">
-                            <li><a href="shop.html">Màn hình ASUS</a></li>
-                            <li><a href="shop.html">Màn hình HP</a></li>
-                            <li><a href="shop.html">Màn hình MSI</a></li>
-                            <li><a href="shop.html">Màn hình Dell</a></li>
+                            <li>
+                                <a href="@Url.Action("List", "Product", new { danhmucId = 3})" style="color: #555;">
+                                    Màn hình máy tính
+                                </a>
+                            </li>
 
                         </ul>
                     </div>
                     <div class="col_1_of_5 span_1_of_5">
                         <h3 class="m_9">Hỗ trợ - dịch vụ</h3>
                         <ul class="list1">
-                            <li><a href="shop.html">Mua hàng trả góp</a></li>
-                            <li><a href="shop.html">Hướng dẫn đặt hàng và thanh toán</a></li>
-                            <li><a href="shop.html">Chính sách bảo hành</a></li>
-                            <li><a href="shop.html">Chính sách giải quyết khiếu nại</a></li>
-                            <li><a href="shop.html">Tra cứu đơn hàng</a></li>
-                            <li><a href="shop.html">Vị trí trên Google Map</a></li>
-                            <li><a href="shop.html">Voucher</a></li>
-                            <li><a href="shop.html">Câu hỏi thường gặp</a></li>
+                            <li><a href="@Url.Action("DSDonHang", "DonHang")">Tra cứu đơn hàng</a></li>
+                            @*<li><a href="shop.html">Mua hàng trả góp</a></li>
+                                <li><a href="shop.html">Hướng dẫn đặt hàng và thanh toán</a></li>
+                                <li><a href="shop.html">Chính sách bảo hành</a></li>
+                                <li><a href="shop.html">Chính sách giải quyết khiếu nại</a></li>
+                                <li><a href="shop.html">Tra cứu đơn hàng</a></li>
+                                <li><a href="shop.html">Vị trí trên Google Map</a></li>
+                                <li><a href="shop.html">Voucher</a></li>
+                                <li><a href="shop.html">Câu hỏi thường gặp</a></li>*@
                         </ul>
                     </div>
                     <div class="col_1_of_5 span_1_of_5">
                         <h3 class="m_9">Thông tin liên hệ</h3>
                         <ul class="list1">
-                            <li><a href="shop.html">Bán hàng online</a></li>
-                            <li><a href="shop.html">Chăm sóc khách hàng</a></li>
-                            <li><a href="shop.html">Hỗ trợ kỹ thuật</a></li>
-                            <li><a href="shop.html">Hỗ trợ bảo hành & sửa chữa</a></li>
+                            <li><a href="@Url.Action("Laptop77", "Home")">Về Laptop77</a></li>
+                            @*<li><a href="shop.html">Chăm sóc khách hàng</a></li>
+                                <li><a href="shop.html">Hỗ trợ kỹ thuật</a></li>
+                                <li><a href="shop.html">Hỗ trợ bảo hành & sửa chữa</a></li>*@
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -295,5 +338,5 @@
     </script>
     <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
 </body>
-</html> 
+</html>
 

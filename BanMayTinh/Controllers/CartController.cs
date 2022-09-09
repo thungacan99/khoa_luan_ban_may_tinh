@@ -270,7 +270,7 @@ namespace BanMayTinh.Controllers
             //ViewBag.TongTien = tienDonHang.tongTien;
             ViewData["TongTien"] = tienDonHang.tongTien;
 
-            return View();
+            return View(tienDonHang);
         }
 
 
@@ -278,9 +278,37 @@ namespace BanMayTinh.Controllers
         public ActionResult ChinhSuaTTDonHang([Bind(Include = "Id, UserNameKH, " +
             "SoDienThoaiNguoiNhan, NgayDat, NgayGiao, TenNguoiNhan, DiaChi, YeuCau, TrangThai")] DonDatHang donDH)
         {
-            dbContext.Entry(donDH).State = EntityState.Modified;
+            var donhang = dbContext.DonDatHangs.Where(a => a.Id == donDH.Id).FirstOrDefault();
+            donhang.SoDienThoaiNguoiNhan = donDH.SoDienThoaiNguoiNhan;
+            donhang.TenNguoiNhan = donDH.TenNguoiNhan;
+            donhang.DiaChi = donDH.DiaChi;
+            donhang.NgayGiao = donDH.NgayGiao;
+            donhang.YeuCau = donDH.YeuCau;
+            dbContext.Entry(donhang).State = EntityState.Modified;
             dbContext.SaveChanges();
             return RedirectToAction("CTDonHang", "DonHang", new { @idDonHang = donDH.Id });
+        }
+
+        /// <summary>
+        /// Hàm này để cập nhật trạng thái của đơn hàng
+        /// </summary>
+        /// <param name="donDH"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CapNhatTTDonHang(int idDonHang, int trangThai = -1)
+        {
+            var donhang = dbContext.DonDatHangs.Where(a => a.Id == idDonHang).FirstOrDefault();
+            if (trangThai != -1)
+            {
+                donhang.TrangThai = (int)trangThai;
+            }
+            else
+            {
+                donhang.TrangThai = donhang.TrangThai + 1;
+            }
+            dbContext.Entry(donhang).State = EntityState.Modified;
+            dbContext.SaveChanges();
+            return RedirectToAction("CTDonHang", "DonHang", new { @idDonHang = idDonHang });
         }
     }
 }
