@@ -350,6 +350,11 @@ p.num{
 	width:30.7%;
 	border: 1px solid #DDD;
 }
+.span_1_of_3-no-margin {
+	display: block;
+	float: left;
+	margin: 1% 1% 1% 0;
+}
 .grid_img{
 	text-align:center;
 }
